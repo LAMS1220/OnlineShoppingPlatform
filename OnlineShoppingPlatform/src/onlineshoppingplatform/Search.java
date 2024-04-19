@@ -1,6 +1,5 @@
 
 package onlineshoppingplatform;
-import javax.swing.*;
 
 public class Search {
 
@@ -10,9 +9,7 @@ public class Search {
     String Furnitures;
     String Hygiene;
     
-   
     
-
     public void setAppliances (String Appliances){
         this.Appliances = Appliances;
 }
