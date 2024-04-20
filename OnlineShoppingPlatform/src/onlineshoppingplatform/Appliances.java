@@ -27,7 +27,7 @@ public class Appliances {
     appliancesList.add("TV");
     appliancesList.add("Aircon");
     appliancesList.add("Microwave");
-        System.out.println("kindly select your order "+appliancesList);
+        System.out.println("kindly select your order  "+appliancesList);
     
 }
 }
