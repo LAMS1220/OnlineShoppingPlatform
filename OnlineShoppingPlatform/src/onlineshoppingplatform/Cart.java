@@ -43,4 +43,11 @@ public class Cart{
     void productOrder(int i) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+    public static void main (String[]args){
+        Product pro = new Product ();
+        System.out.println(pro.Product(1)); //example of number of product 
+    }
+    
+    
 }
