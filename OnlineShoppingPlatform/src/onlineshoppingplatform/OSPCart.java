@@ -9,8 +9,8 @@ public class OSPCart implements ActionListener{
     
     private int counter = 0;
     private int counter2 = 0;
-    private JButton btnAdd, btnSub, btnDel, btnAdd2, btnSub2, btnDel2 ;
-    private JLabel lblQuantity, lblImage, lblQuantity2, lblImage2;
+    private JButton btnAdd, btnSub, btnDel, btnAdd2, btnSub2, btnDel2, btnHome, btnPayment ;
+    private JLabel lblQuantity, lblImage, lblQuantity2, lblImage2, lblCart, lblAmount;
     
     
     OSPCart(){
@@ -22,6 +22,11 @@ public class OSPCart implements ActionListener{
         
         
         //components
+        lblCart = new JLabel ("CART QUERY");
+        lblAmount = new JLabel ("AMOUNT: ");
+        btnHome = new JButton("HOME");
+        btnPayment = new JButton("CHECK OUT");
+        
         btnAdd = new JButton("+");
         btnSub = new JButton("-");
         btnDel = new JButton("Delete");
@@ -36,6 +41,11 @@ public class OSPCart implements ActionListener{
         lblImage2 = new JLabel("image placeholder");
         
         //add to frame
+        OSP.add(lblCart);
+        OSP.add(lblAmount);
+        OSP.add(btnPayment);
+        OSP.add(btnHome);
+        
         OSP.add(btnAdd);
         OSP.add(btnSub);
         OSP.add(btnDel);
@@ -50,6 +60,11 @@ public class OSPCart implements ActionListener{
         OSP.add(lblImage2);
         
         //location
+        lblCart.setBounds(25, 0, 100, 100);
+        lblAmount.setBounds(350, 280, 100, 200);
+        btnHome.setBounds(25, 80, 70, 25);
+        btnPayment.setBounds(350, 425,120, 25);
+        
         btnAdd.setBounds(175, 200, 45, 25);
         btnSub.setBounds(300, 200, 45, 25);
         btnDel.setBounds(390, 225, 75, 25);
@@ -106,6 +121,8 @@ public class OSPCart implements ActionListener{
         lblQuantity.setText("Quantity: "+counter);
         
         lblQuantity2.setText("Quantity: "+counter2);
+        
+        lblAmount.setText("AMOUNT: $"+counter+counter2);
     }
 
 }

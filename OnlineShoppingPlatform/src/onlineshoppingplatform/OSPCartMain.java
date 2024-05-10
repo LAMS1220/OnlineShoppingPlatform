@@ -11,6 +11,6 @@ package onlineshoppingplatform;
  */
 public class OSPCartMain {
     public static void main (String[]args){
-        new OSPCart();
+        new OSPCart() {};
     }
 }
