@@ -1,5 +1,8 @@
 package onlineshoppingplatform;
 
+
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.*;
 import javax.swing.*;
 
@@ -11,15 +14,14 @@ public class OSPCart implements ActionListener{
     private int counter2 = 0;
     private JButton btnAdd, btnSub, btnDel, btnAdd2, btnSub2, btnDel2, btnHome, btnPayment ;
     private JLabel lblQuantity, lblImage, lblQuantity2, lblImage2, lblCart, lblAmount;
+  
     
     
     OSPCart(){
         JFrame OSP = new JFrame ("CART");
-        
-        
+
         //size of frame
-        OSP.setSize(500,500);
-        
+        OSP.setSize(600,700);
         
         //components
         lblCart = new JLabel ("CART QUERY");
@@ -60,23 +62,27 @@ public class OSPCart implements ActionListener{
         OSP.add(lblImage2);
         
         //location
-        lblCart.setBounds(25, 0, 100, 100);
-        lblAmount.setBounds(350, 280, 100, 200);
         btnHome.setBounds(25, 80, 70, 25);
-        btnPayment.setBounds(350, 425,120, 25);
+        lblCart.setBounds(25, 0, 100, 100);
+        lblCart.setFont(new Font ("Garet", Font.BOLD, 15));
+        lblAmount.setFont(new Font ("Garet", Font.BOLD, 15));
         
-        btnAdd.setBounds(175, 200, 45, 25);
-        btnSub.setBounds(300, 200, 45, 25);
-        btnDel.setBounds(390, 225, 75, 25);
-        lblQuantity.setBounds(230, 190, 200, 50);
-        lblImage.setBounds(50, 150, 100, 100);
+        
+        lblAmount.setBounds(400, 410, 100, 200);
+        btnPayment.setBounds(400, 550,120, 25);
+        
+        btnAdd.setBounds(200, 290, 45, 25);
+        btnSub.setBounds(325, 290, 45, 25);
+        btnDel.setBounds(400, 290, 75, 25);
+        lblQuantity.setBounds(250, 280, 200, 50);
+        lblImage.setBounds(75, 240, 100, 100);
         
         //2nd
-        btnAdd2.setBounds(175, 300, 45, 25);
-        btnSub2.setBounds(300, 300, 45, 25);
-        btnDel2.setBounds(390, 325, 75, 25);
-        lblQuantity2.setBounds(230, 290, 200, 50);
-        lblImage2.setBounds(50, 250, 100, 100);
+        btnAdd2.setBounds(200, 400, 45, 25);
+        btnSub2.setBounds(325, 400, 45, 25);
+        btnDel2.setBounds(400, 400, 75, 25);
+        lblQuantity2.setBounds(250, 390, 200, 50);
+        lblImage2.setBounds(75, 350, 100, 100);
         
         //listener
         btnAdd.addActionListener(this);
