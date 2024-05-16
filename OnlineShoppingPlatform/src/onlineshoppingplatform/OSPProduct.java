@@ -52,10 +52,11 @@ public class OSPProduct extends JFrame{
         lblAmount.setBounds(80, 310, 90, 50);
         lblAmount.setFont(new Font("Bell MT", Font.BOLD, 15));
         cmbVariation.setBounds(350, 150, 75, 25);
+        
         setLayout(null);
         
         setVisible(true);
-        
+        setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         
         

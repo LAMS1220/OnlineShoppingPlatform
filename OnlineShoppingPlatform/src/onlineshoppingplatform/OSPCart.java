@@ -21,11 +21,14 @@ public class OSPCart implements ActionListener{
         JFrame OSP = new JFrame ("CART");
 
         //size of frame
+        //font
         OSP.setSize(600,700);
         
         //components
         lblCart = new JLabel ("CART QUERY");
+        lblCart.setFont(new Font ("Arial", Font.BOLD, 15));
         lblAmount = new JLabel ("AMOUNT: ");
+        lblAmount.setFont(new Font ("Arial", Font.BOLD, 15));
         btnHome = new JButton("HOME");
         btnPayment = new JButton("CHECK OUT");
         
@@ -64,8 +67,6 @@ public class OSPCart implements ActionListener{
         //location
         btnHome.setBounds(25, 80, 70, 25);
         lblCart.setBounds(25, 0, 100, 100);
-        lblCart.setFont(new Font ("Garet", Font.BOLD, 15));
-        lblAmount.setFont(new Font ("Garet", Font.BOLD, 15));
         
         
         lblAmount.setBounds(400, 410, 100, 200);
@@ -74,14 +75,14 @@ public class OSPCart implements ActionListener{
         btnAdd.setBounds(200, 290, 45, 25);
         btnSub.setBounds(325, 290, 45, 25);
         btnDel.setBounds(400, 290, 75, 25);
-        lblQuantity.setBounds(250, 280, 200, 50);
+        lblQuantity.setBounds(255, 280, 200, 50);
         lblImage.setBounds(75, 240, 100, 100);
         
         //2nd
         btnAdd2.setBounds(200, 400, 45, 25);
         btnSub2.setBounds(325, 400, 45, 25);
         btnDel2.setBounds(400, 400, 75, 25);
-        lblQuantity2.setBounds(250, 390, 200, 50);
+        lblQuantity2.setBounds(255, 390, 200, 50);
         lblImage2.setBounds(75, 350, 100, 100);
         
         //listener
@@ -100,7 +101,7 @@ public class OSPCart implements ActionListener{
         
         //visible
         OSP.setVisible(true);
-        
+        OSP.setResizable(false);
         OSP.setDefaultCloseOperation(OSP.EXIT_ON_CLOSE);
         
     }

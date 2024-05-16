@@ -131,6 +131,7 @@ public class OSPCategory {
         
         Category.setLayout(null);            
         Category.setVisible(true);
+        Category.setResizable(false);
         Category.setDefaultCloseOperation(Category.EXIT_ON_CLOSE);
 }
 }
