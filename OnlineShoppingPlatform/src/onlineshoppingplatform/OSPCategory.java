@@ -10,12 +10,14 @@ import javax.swing.*;
  * @author noctafly
  */
 public class OSPCategory {
+            
+    private JButton apparel, appliances, furnitures, gadgets, hygiene, mapparel, wapparel, kapparel, acc, shoes, home;  
+    private JLabel categ, name, name1, name2, name3, name4, price1, price2, price3, price4, product1, product2, product3, product4, icon;
+    
     public OSPCategory() {
     
-    JFrame Category = new JFrame("CATEGORY");    
-    JButton apparel, appliances, furnitures, gadgets, hygiene, mapparel, wapparel, kapparel, acc, shoes, home;  
-    JLabel categ, name, name1, name2, name3, name4, price1, price2, price3, price4, product1, product2, product3, product4, icon;
-    
+    JFrame Category = new JFrame("CATEGORY");
+     
     Category.setSize(600, 700);
         
         //header
