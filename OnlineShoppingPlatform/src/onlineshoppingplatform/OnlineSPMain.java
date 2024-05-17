@@ -12,7 +12,9 @@ package onlineshoppingplatform;
 public class OnlineSPMain {
     public static void main (String[]args){
    
-        
+        new OnlineSP();{
+            System.out.println("ONLINE SHOPPING PLATFORM");
+        }
         
     }
     
