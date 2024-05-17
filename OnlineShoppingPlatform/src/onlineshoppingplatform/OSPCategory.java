@@ -61,10 +61,13 @@ public class OSPCategory {
         
         //header ooordinates
         
-        categ.setBounds(25, 40, 100, 50);
-        name.setBounds(120, 60, 40, 40);
-        icon.setBounds(40, 60, 40, 40);
-        home.setBounds(20, 25, 70, 25);
+        categ.setBounds(25, 0, 100, 50);
+        name.setBounds(120, 25, 40, 40);
+        icon.setBounds(25, 25, 40, 40);
+        home.setBounds(25, 65, 70, 25);
+        
+        //sizes
+        categ.setFont(new Font("Ariel", Font.BOLD, 15 ));
         
         //main categories coordinates
         apparel.setBounds(10, 120, 100, 25);
