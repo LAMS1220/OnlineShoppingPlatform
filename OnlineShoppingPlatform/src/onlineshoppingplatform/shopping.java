@@ -125,8 +125,5 @@ public class shopping {
         
         f.setDefaultCloseOperation(f.EXIT_ON_CLOSE);
     }
-    public static void main(String[] args) {
-        // TODO code application logic here
-        new shopping(){};
-    }
+    
     }
