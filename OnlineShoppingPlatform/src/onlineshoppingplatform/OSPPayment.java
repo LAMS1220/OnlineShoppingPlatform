@@ -10,7 +10,7 @@ public class OSPPayment {
     private JComboBox<String> cmbmop;
     
     OSPPayment() {
-        JFrame OSP = new JFrame("Payment");
+        JFrame OSP = new JFrame("PAYMENT");
 
         OSP.setSize(600, 700);
 
