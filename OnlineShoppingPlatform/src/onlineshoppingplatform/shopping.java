@@ -2,7 +2,8 @@ package onlineshoppingplatform;
 
 import javax.swing.*;
 import java.awt.Font;
-
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
@@ -12,16 +13,16 @@ import java.awt.Font;
  *
  * @author alzona
  */
-public class shopping {
+public class shopping extends JFrame implements ActionListener{
     
     private JLabel lblHomepage ,lblOSP, lblCategories, lblproduct1, lblproduct2,lblproduct3 ,lblproduct4, lbltext1,lbltext2,lbltext3,lbltext4 ;
     private JTextField txtfldSearch;
     private JButton btnCart,btnPayment, btnapparel,btnappliances,btnfurniture, btngadgets, btnhygiene;
     
     shopping(){
-        JFrame f = new JFrame("Online Shopping Platform");
         
-        f.setSize(600,700);
+        setTitle("Online Shopping Platform");
+        setSize(600,700);
         
         lblHomepage = new JLabel("HOMEPAGE");
         lblHomepage.setBounds(10, 10, 100, 30);
@@ -45,6 +46,7 @@ public class shopping {
         
         btnPayment = new JButton("PAYMENT");
         btnPayment.setBounds(360, 80, 110, 30);
+        
         btnPayment.setFont(new Font("Arial", Font.BOLD, 15));
         
         btnapparel = new JButton("APPAREL");
@@ -99,31 +101,47 @@ public class shopping {
         lbltext4.setBounds(475, 370, 100, 25);
         lbltext4.setFont(new Font("Arial", Font.BOLD,10));
         
-        f.add(lblHomepage);    
-        f.add(lblOSP);
-        f.add(txtfldSearch);
-        f.add(btnCart);
-        f.add(btnPayment);
-        f.add(lblCategories);
-        f.add(btnapparel);
-        f.add(btnappliances);
-        f.add(btnfurniture);
-        f.add(btngadgets);
-        f.add(btnhygiene);
-        f.add(lblproduct1);
-        f.add(lblproduct2);
-        f.add(lblproduct3);
-        f.add(lblproduct4);
-        f.add(lbltext1);
-        f.add(lbltext2);
-        f.add(lbltext3);
-        f.add(lbltext4);
+        add(lblHomepage);    
+        add(lblOSP);
+        add(txtfldSearch);
+        add(btnCart);
+        add(btnPayment);
+        add(lblCategories);
+        add(btnapparel);
+        add(btnappliances);
+        add(btnfurniture);
+        add(btngadgets);
+        add(btnhygiene);
+        add(lblproduct1);
+        add(lblproduct2);
+        add(lblproduct3);
+        add(lblproduct4);
+        add(lbltext1);
+        add(lbltext2);
+        add(lbltext3);
+        add(lbltext4);
         
-        f.setLayout(null);
-        f.setVisible(true);
-        f.setResizable(false);
+        btnCart.addActionListener(this);
+        btnPayment.addActionListener(this);
         
-        f.setDefaultCloseOperation(f.EXIT_ON_CLOSE);
+        setLayout(null);
+        setResizable(false);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
     
-    }
+    
+    public void actionPerformed (ActionEvent e){
+        
+        dispose();
+        if(e.getSource() == btnPayment){
+            OSPPayment payment = new OSPPayment();
+            payment.setVisible(true);
+            
+        }else if (e.getSource() == btnCart) {
+            OSPCart cart = new OSPCart();
+            cart.setVisible(true);
+        }
+        
+}
+
+}

@@ -1,14 +1,13 @@
 package onlineshoppingplatform;
 
-
-import java.awt.Color;
 import java.awt.Font;
-import java.awt.event.*;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 import javax.swing.*;
 
 
 
-public class OSPCart implements ActionListener{
+public class OSPCart extends JFrame implements ActionListener{
     
     private int counter = 0;
     private int counter2 = 0;
@@ -18,11 +17,9 @@ public class OSPCart implements ActionListener{
     
     
     OSPCart(){
-        JFrame OSP = new JFrame ("CART");
-
         //size of frame
         //font
-        OSP.setSize(600,700);
+        setSize(600,700);
         
         //components
         lblCart = new JLabel ("CART QUERY");
@@ -46,23 +43,23 @@ public class OSPCart implements ActionListener{
         lblImage2 = new JLabel("image placeholder");
         
         //add to frame
-        OSP.add(lblCart);
-        OSP.add(lblAmount);
-        OSP.add(btnPayment);
-        OSP.add(btnHome);
+        add(lblCart);
+        add(lblAmount);
+        add(btnPayment);
+        add(btnHome);
         
-        OSP.add(btnAdd);
-        OSP.add(btnSub);
-        OSP.add(btnDel);
-        OSP.add(lblQuantity);
-        OSP.add(lblImage);
+        add(btnAdd);
+        add(btnSub);
+        add(btnDel);
+        add(lblQuantity);
+        add(lblImage);
         
         //2nd
-        OSP.add(btnAdd2);
-        OSP.add(btnSub2);
-        OSP.add(btnDel2);
-        OSP.add(lblQuantity2);
-        OSP.add(lblImage2);
+        add(btnAdd2);
+        add(btnSub2);
+        add(btnDel2);
+        add(lblQuantity2);
+        add(lblImage2);
         
         //location
         btnHome.setBounds(25, 80, 70, 25);
@@ -71,7 +68,7 @@ public class OSPCart implements ActionListener{
         
         lblAmount.setBounds(400, 410, 100, 200);
         btnPayment.setBounds(400, 550,120, 25);
-        
+
         btnAdd.setBounds(200, 290, 45, 25);
         btnSub.setBounds(325, 290, 45, 25);
         btnDel.setBounds(400, 290, 75, 25);
@@ -95,18 +92,21 @@ public class OSPCart implements ActionListener{
         btnSub2.addActionListener(this);
         btnDel2.addActionListener(this);
         
+        btnPayment.addActionListener(this);
+        btnHome.addActionListener(this);
+        
         //layout
-        OSP.setLayout(null);
+        setLayout(null);
         
         
         //visible
-        OSP.setVisible(true);
-        OSP.setResizable(false);
-        OSP.setDefaultCloseOperation(OSP.EXIT_ON_CLOSE);
+        setResizable(false);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
     }
     @Override
     public void actionPerformed (ActionEvent e){
+        
         if (e.getSource() == btnAdd){
             counter ++;         
         }
@@ -119,17 +119,28 @@ public class OSPCart implements ActionListener{
         if (e.getSource() == btnSub2){
             counter2 --;  
         }
-        else if (e.getSource() == btnDel){
+        if (e.getSource() == btnDel){
             counter = 0;
         }
-        else if (e.getSource() == btnDel2){
+        if (e.getSource() == btnDel2){
             counter2 = 0;
         }
         lblQuantity.setText("Quantity: "+counter);
         
         lblQuantity2.setText("Quantity: "+counter2);
         
-        lblAmount.setText("AMOUNT: $"+counter+counter2);
-    }
-
+        lblAmount.setText("AMOUNT: $"+(counter+counter2));
+        
+        dispose();
+        if(e.getSource() == btnHome){
+            shopping menu = new shopping();
+            menu.setVisible(true);
+            
+        }else if (e.getSource() == btnPayment) {
+            OSPPayment payment = new OSPPayment();
+            payment.setVisible(true);
+        }
+        
+}
+    
 }
