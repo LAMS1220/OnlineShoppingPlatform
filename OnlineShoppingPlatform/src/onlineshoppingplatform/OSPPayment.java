@@ -2,17 +2,19 @@
 package onlineshoppingplatform;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
-public class OSPPayment {
+public class OSPPayment extends JFrame implements ActionListener{
     private JLabel lblname, lbladd, lblcontact, lblcustomer, lblmop, lblamount;
     private JButton btnpurchase, btnhome, btncart;
     private JTextField txtname, txtadd, txtcontact, txtamount;
     private JComboBox<String> cmbmop;
     
     OSPPayment() {
-        JFrame OSP = new JFrame("PAYMENT");
+        setTitle("Payment");
 
-        OSP.setSize(600, 700);
+        setSize(600, 700);
 
         lblcustomer = new JLabel("Customer's Information");
         lblcustomer.setBounds(20, 20, 220, 20);
@@ -59,9 +61,12 @@ public class OSPPayment {
         
         btnhome = new JButton("HOME");
         btnhome.setBounds(20, 50, 70, 30);
+        btnhome.addActionListener(this);
+        
         
         btncart = new JButton("CART");
         btncart.setBounds(100, 50, 70, 30);
+        btncart.addActionListener(this);
 
         JPanel panel = new JPanel();
         String[] mode = {"Cash on Delivery", "Debit Card", "Credit Card", "GCash", "Paymaya", "Paypal"};
@@ -69,26 +74,39 @@ public class OSPPayment {
         cmbmop.setBounds(250, 300, 150, 20);
         panel.add(cmbmop);
 
-        OSP.add(panel);
-        OSP.add(lblname);
-        OSP.add(lbladd);
-        OSP.add(lblcontact);
-        OSP.add(lblcustomer);
-        OSP.add(lblamount);
-        OSP.add(lblmop);
-        OSP.add(btnpurchase);
-        OSP.add(btnhome);
-        OSP.add(btncart);
-        OSP.add(txtname);
-        OSP.add(txtadd);
-        OSP.add(txtcontact);
-        OSP.add(txtamount);
-        OSP.add(cmbmop);
+        add(panel);
+        add(lblname);
+        add(lbladd);
+        add(lblcontact);
+        add(lblcustomer);
+        add(lblamount);
+        add(lblmop);
+        add(btnpurchase);
+        add(btnhome);
+        add(btncart);
+        add(txtname);
+        add(txtadd);
+        add(txtcontact);
+        add(txtamount);
+        add(cmbmop);
 
-        OSP.setLayout(null);
-        OSP.setVisible(true);
-        OSP.setResizable(false);
-        OSP.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(null);
+        setResizable(false);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
- 
+    
+  
+    public void actionPerformed (ActionEvent e){
+        
+        dispose();
+        if(e.getSource() == btnhome){
+            shopping menu = new shopping();
+            menu.setVisible(true);
+            
+        }else if (e.getSource() == btncart) {
+            OSPCart cart = new OSPCart();
+            cart.setVisible(true);
+        }
+        
+}
 }
