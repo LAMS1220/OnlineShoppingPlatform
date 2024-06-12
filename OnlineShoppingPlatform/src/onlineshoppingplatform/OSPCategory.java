@@ -151,8 +151,8 @@ public class OSPCategory extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent e) {
             dispose();
             if(e.getSource() == appliances){
-                OSPCateg2 categ2 = new OSPCateg2();
-                categ2.setVisible(true);
+                OSPCateg2 c2 = new OSPCateg2();
+                c2.setVisible(true);
             }
             else if(e.getSource() == furnitures){
                 OSPCateg3 c3 = new OSPCateg3();
