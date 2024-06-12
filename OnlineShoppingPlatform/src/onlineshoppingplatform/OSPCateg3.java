@@ -9,14 +9,14 @@ import java.awt.event.*;
  *
  * @author noctafly
  */
-public class OSPCateg3 implements ActionListener{
+public class OSPCateg3 extends JFrame implements ActionListener{
     
     private JButton apparel, appliances, furnitures, gadgets, hygiene, bed, table, chair, lamp, cabinet, home;  
     private JLabel categ, name, name1, name2, name3, name4, price1, price2, price3, price4, product1, product2, product3, product4, icon;
     
     public OSPCateg3() {
     
-    JFrame Furnitures = new JFrame("CATEGORY");
+    JFrame Furnitures = new JFrame("FURNITURESE CATEGORY");
      
     Furnitures.setSize(600, 700);
         
@@ -143,7 +143,7 @@ public class OSPCateg3 implements ActionListener{
         Furnitures.setLayout(null);            
         Furnitures.setVisible(true);
         Furnitures.setResizable(false);
-        Furnitures.setDefaultCloseOperation(Furnitures.EXIT_ON_CLOSE);
+        Furnitures.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 }
 
     @Override

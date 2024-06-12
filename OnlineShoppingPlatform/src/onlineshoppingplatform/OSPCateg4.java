@@ -9,13 +9,13 @@ import java.awt.event.*;
  *
  * @author noctafly
  */
-public class OSPCateg4 implements ActionListener{
+public class OSPCateg4 extends JFrame implements ActionListener{
     private JButton apparel, appliances, furnitures, gadgets, hygiene, mobile, pc, tablet, watch, peripherals, home;  
     private JLabel categ, name, name1, name2, name3, name4, price1, price2, price3, price4, product1, product2, product3, product4, icon;
     
     public OSPCateg4() {
     
-    JFrame Gadgets = new JFrame("CATEGORY");
+    JFrame Gadgets = new JFrame("GADGETS CATEGORY");
      
     Gadgets.setSize(600, 700);
         

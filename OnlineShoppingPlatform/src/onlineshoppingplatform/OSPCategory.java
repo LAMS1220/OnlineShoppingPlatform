@@ -17,7 +17,7 @@ public class OSPCategory extends JFrame implements ActionListener{
     
     public OSPCategory() {
     
-    JFrame Apparel = new JFrame("CATEGORY");
+    JFrame Apparel = new JFrame("APPAREL CATEGORY");
      
     Apparel.setSize(600, 700);
         

@@ -8,13 +8,13 @@ import java.awt.event.*;
  *
  * @author noctafly
  */
-public class OSPCateg5 implements ActionListener{
+public class OSPCateg5 extends JFrame implements ActionListener{
     private JButton apparel, appliances, furnitures, gadgets, hygiene, shave, foot, deo, skin, shower, home;  
     private JLabel categ, name, name1, name2, name3, name4, price1, price2, price3, price4, product1, product2, product3, product4, icon;
     
     public OSPCateg5() {
     
-    JFrame Hygiene = new JFrame("CATEGORY");
+    JFrame Hygiene = new JFrame("HYGIENE CATEGORY");
      
     Hygiene.setSize(600, 700);
         
@@ -141,7 +141,7 @@ public class OSPCateg5 implements ActionListener{
         Hygiene.setLayout(null);            
         Hygiene.setVisible(true);
         Hygiene.setResizable(false);
-        Hygiene.setDefaultCloseOperation(Hygiene.EXIT_ON_CLOSE);
+        Hygiene.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 }
 
     @Override
