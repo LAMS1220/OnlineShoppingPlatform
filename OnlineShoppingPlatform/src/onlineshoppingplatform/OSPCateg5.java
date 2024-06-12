@@ -3,18 +3,18 @@ package onlineshoppingplatform;
 
 import java.awt.*;
 import javax.swing.*;
-
+import java.awt.event.*;
 /**
  *
  * @author noctafly
  */
-public class OSPCateg5 {
+public class OSPCateg5 extends JFrame implements ActionListener{
     private JButton apparel, appliances, furnitures, gadgets, hygiene, shave, foot, deo, skin, shower, home;  
     private JLabel categ, name, name1, name2, name3, name4, price1, price2, price3, price4, product1, product2, product3, product4, icon;
     
-    public OSPCateg5() {
+    OSPCateg5() {
     
-    JFrame Hygiene = new JFrame("CATEGORY");
+    JFrame Hygiene = new JFrame("HYGIENE CATEGORY");
      
     Hygiene.setSize(600, 700);
         
@@ -99,6 +99,13 @@ public class OSPCateg5 {
         price3.setBounds(305, 305, 150, 150);
         price4.setBounds(445, 305, 150, 150);
         
+         //Action Listener
+        appliances.addActionListener(this);
+        furnitures.addActionListener(this);
+        apparel.addActionListener(this);
+        apparel.addActionListener(this);
+        gadgets.addActionListener(this);
+        
         Hygiene.add(categ);
         Hygiene.add(name);
         Hygiene.add(icon);
@@ -135,6 +142,35 @@ public class OSPCateg5 {
         Hygiene.setLayout(null);            
         Hygiene.setVisible(true);
         Hygiene.setResizable(false);
-        Hygiene.setDefaultCloseOperation(Hygiene.EXIT_ON_CLOSE);
+        Hygiene.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+            dispose();
+            
+            if(e.getSource() == apparel){
+                OSPCategory c1 = new OSPCategory();
+                c1.setVisible(true);
+            }
+            else if(e.getSource() == appliances){
+                OSPCateg2 c2 = new OSPCateg2();
+                c2.setVisible(true);
+            }
+            else if(e.getSource() == furnitures){
+                OSPCateg3 c3 = new OSPCateg3();
+                c3.setVisible(true);
+            }
+            else if(e.getSource() == gadgets){
+                OSPCateg4 c4 = new OSPCateg4();
+                c4.setVisible(true);
+            }
+            else if(e.getSource() == hygiene){
+                OSPCateg5 c5 = new OSPCateg5();
+                c5.setVisible(true);
+            }
+            
+    }
+
+   
 }

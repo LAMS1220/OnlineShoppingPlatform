@@ -3,13 +3,35 @@ package onlineshoppingplatform;
 
 /**
  *
- * @author noctafly
+ * @author noctafly solero
  */
+import java.awt.EventQueue;
+
 public class OSPCategoryMain {
 
    
     public static void main(String[] args) {
-        new OSPCategory() {};
+       EventQueue.invokeLater(new Runnable(){
+           @Override
+           public void run() {
+                OSPCategory categ = new OSPCategory();
+                categ.setVisible(true);
+           }
+           
+        
+      });
     }
-    
 }
+ 
+                          
+         
+              // new OSPCategory() {};
+              
+           
+       
+        
+        
+      
+    
+    
+
