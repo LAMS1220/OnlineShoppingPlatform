@@ -8,7 +8,7 @@ package onlineshoppingplatform;
 public class OSPCateg4Main {
 
     public static void main(String[] args) {
-        new OSPCateg4() {};
+       // new OSPCateg4() {};
     }
     
 }

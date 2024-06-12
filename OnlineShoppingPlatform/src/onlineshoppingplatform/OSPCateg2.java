@@ -7,13 +7,14 @@ package onlineshoppingplatform;
 
 import java.awt.*;
 import javax.swing.*;
+import java.awt.event.*;
 
 
 /**
  *
  * @author noctafly
  */
-public class OSPCateg2 {
+public class OSPCateg2 implements ActionListener{
     private JButton apparel, appliances, furnitures, gadgets, hygiene, ref, efan, tv, ac, microwave, home;  
     private JLabel categ, name, name1, name2, name3, name4, price1, price2, price3, price4, product1, product2, product3, product4, icon;
     
@@ -104,6 +105,12 @@ public class OSPCateg2 {
         price3.setBounds(305, 305, 150, 150);
         price4.setBounds(445, 305, 150, 150);
         
+         //Action Listener
+        apparel.addActionListener(this);
+        furnitures.addActionListener(this);
+        gadgets.addActionListener(this);
+        hygiene.addActionListener(this);
+        
         appliance.add(categ);
         appliance.add(name);
         appliance.add(icon);
@@ -142,4 +149,27 @@ public class OSPCateg2 {
         appliance.setResizable(false);
         appliance.setDefaultCloseOperation(appliance.EXIT_ON_CLOSE);
 }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        dispose();
+            if(e.getSource() == furnitures){
+                OSPCateg3 c3 = new OSPCateg3();
+                c3.setVisible(true);
+            }
+            else if(e.getSource() == apparel){
+                OSPCategory c1 = new OSPCategory();
+                c1.setVisible(true);
+            }
+            else if(e.getSource() == gadgets){
+                OSPCateg4 c4 = new OSPCateg4();
+                c4.setVisible(true);
+            }
+            else if(e.getSource() == hygiene){
+                OSPCateg5 c5 = new OSPCateg5();
+                c5.setVisible(true);
+            }
+    }
+
+   
 }

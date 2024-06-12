@@ -3,13 +3,14 @@ package onlineshoppingplatform;
 
 import java.awt.Font;
 import javax.swing.*;
-
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  *
  * @author noctafly
  */
-public class OSPCategory {
+public class OSPCategory extends JFrame implements ActionListener{
             
     private JButton apparel, appliances, furnitures, gadgets, hygiene, mapparel, wapparel, kapparel, acc, shoes, home;  
     private JLabel categ, name, name1, name2, name3, name4, price1, price2, price3, price4, product1, product2, product3, product4, icon;
@@ -101,6 +102,12 @@ public class OSPCategory {
         price3.setBounds(305, 305, 150, 150);
         price4.setBounds(445, 305, 150, 150);
         
+        //Action Listener
+        appliances.addActionListener(this);
+        furnitures.addActionListener(this);
+        gadgets.addActionListener(this);
+        hygiene.addActionListener(this);
+        
         Apparel.add(categ);
         Apparel.add(name);
         Apparel.add(icon);
@@ -137,6 +144,29 @@ public class OSPCategory {
         Apparel.setLayout(null);            
         Apparel.setVisible(true);
         Apparel.setResizable(false);
-        Apparel.setDefaultCloseOperation(Apparel.EXIT_ON_CLOSE);
+        Apparel.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+            dispose();
+            if(e.getSource() == appliances){
+                OSPCateg2 categ2 = new OSPCateg2();
+                categ2.setVisible(true);
+            }
+            else if(e.getSource() == furnitures){
+                OSPCateg3 c3 = new OSPCateg3();
+                c3.setVisible(true);
+            }
+            else if(e.getSource() == gadgets){
+                OSPCateg4 c4 = new OSPCateg4();
+                c4.setVisible(true);
+            }
+            else if(e.getSource() == hygiene){
+                OSPCateg5 c5 = new OSPCateg5();
+                c5.setVisible(true);
+            }
+            
+     
+    }
 }
