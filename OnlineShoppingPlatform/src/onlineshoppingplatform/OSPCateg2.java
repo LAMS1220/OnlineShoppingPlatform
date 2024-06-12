@@ -18,7 +18,7 @@ public class OSPCateg2 extends JFrame implements ActionListener{
     private JButton apparel, appliances, furnitures, gadgets, hygiene, ref, efan, tv, ac, microwave, home;  
     private JLabel categ, name, name1, name2, name3, name4, price1, price2, price3, price4, product1, product2, product3, product4, icon;
     
-    public OSPCateg2() {
+    OSPCateg2() {
     
     JFrame appliance = new JFrame("APPLIANCES CATEGORY");
      
@@ -110,6 +110,7 @@ public class OSPCateg2 extends JFrame implements ActionListener{
         furnitures.addActionListener(this);
         gadgets.addActionListener(this);
         hygiene.addActionListener(this);
+        appliances.addActionListener(this);
         
         appliance.add(categ);
         appliance.add(name);
@@ -153,13 +154,18 @@ public class OSPCateg2 extends JFrame implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         dispose();
-            if(e.getSource() == furnitures){
-                OSPCateg3 c3 = new OSPCateg3();
-                c3.setVisible(true);
-            }
-            else if(e.getSource() == apparel){
+            
+            if(e.getSource() == apparel){
                 OSPCategory c1 = new OSPCategory();
                 c1.setVisible(true);
+            }
+            else if(e.getSource() == appliances){
+                OSPCateg2 c2 = new OSPCateg2();
+                c2.setVisible(true);
+            }
+            else if(e.getSource() == furnitures){
+                OSPCateg3 c3 = new OSPCateg3();
+                c3.setVisible(true);
             }
             else if(e.getSource() == gadgets){
                 OSPCateg4 c4 = new OSPCateg4();
@@ -169,6 +175,7 @@ public class OSPCateg2 extends JFrame implements ActionListener{
                 OSPCateg5 c5 = new OSPCateg5();
                 c5.setVisible(true);
             }
+            
     }
 
    

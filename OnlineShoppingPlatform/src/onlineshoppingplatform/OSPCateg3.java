@@ -14,9 +14,9 @@ public class OSPCateg3 extends JFrame implements ActionListener{
     private JButton apparel, appliances, furnitures, gadgets, hygiene, bed, table, chair, lamp, cabinet, home;  
     private JLabel categ, name, name1, name2, name3, name4, price1, price2, price3, price4, product1, product2, product3, product4, icon;
     
-    public OSPCateg3() {
+    OSPCateg3() {
     
-    JFrame Furnitures = new JFrame("FURNITURESE CATEGORY");
+    JFrame Furnitures = new JFrame("FURNITURES CATEGORY");
      
     Furnitures.setSize(600, 700);
         
@@ -106,6 +106,7 @@ public class OSPCateg3 extends JFrame implements ActionListener{
         furnitures.addActionListener(this);
         apparel.addActionListener(this);
         hygiene.addActionListener(this);
+        gadgets.addActionListener(this);
         
         Furnitures.add(categ);
         Furnitures.add(name);
@@ -148,14 +149,19 @@ public class OSPCateg3 extends JFrame implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        dispose();
-            if(e.getSource() == appliances){
+       dispose();
+            
+            if(e.getSource() == apparel){
+                OSPCategory c1 = new OSPCategory();
+                c1.setVisible(true);
+            }
+            else if(e.getSource() == appliances){
                 OSPCateg2 c2 = new OSPCateg2();
                 c2.setVisible(true);
             }
-            else if(e.getSource() == apparel){
-                OSPCategory c1 = new OSPCategory();
-                c1.setVisible(true);
+            else if(e.getSource() == furnitures){
+                OSPCateg3 c3 = new OSPCateg3();
+                c3.setVisible(true);
             }
             else if(e.getSource() == gadgets){
                 OSPCateg4 c4 = new OSPCateg4();
@@ -165,6 +171,7 @@ public class OSPCateg3 extends JFrame implements ActionListener{
                 OSPCateg5 c5 = new OSPCateg5();
                 c5.setVisible(true);
             }
+            
     }
 
 }

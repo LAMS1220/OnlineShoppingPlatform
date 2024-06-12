@@ -13,7 +13,7 @@ public class OSPCateg4 extends JFrame implements ActionListener{
     private JButton apparel, appliances, furnitures, gadgets, hygiene, mobile, pc, tablet, watch, peripherals, home;  
     private JLabel categ, name, name1, name2, name3, name4, price1, price2, price3, price4, product1, product2, product3, product4, icon;
     
-    public OSPCateg4() {
+    OSPCateg4() {
     
     JFrame Gadgets = new JFrame("GADGETS CATEGORY");
      
@@ -105,6 +105,7 @@ public class OSPCateg4 extends JFrame implements ActionListener{
         furnitures.addActionListener(this);
         apparel.addActionListener(this);
         hygiene.addActionListener(this);
+        gadgets.addActionListener(this);
         
         Gadgets.add(categ);
         Gadgets.add(name);
@@ -148,7 +149,12 @@ public class OSPCateg4 extends JFrame implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         dispose();
-            if(e.getSource() == appliances){
+            
+            if(e.getSource() == apparel){
+                OSPCategory c1 = new OSPCategory();
+                c1.setVisible(true);
+            }
+            else if(e.getSource() == appliances){
                 OSPCateg2 c2 = new OSPCateg2();
                 c2.setVisible(true);
             }
@@ -157,13 +163,14 @@ public class OSPCateg4 extends JFrame implements ActionListener{
                 c3.setVisible(true);
             }
             else if(e.getSource() == gadgets){
-                OSPCategory c1 = new OSPCategory();
-                c1.setVisible(true);
+                OSPCateg4 c4 = new OSPCateg4();
+                c4.setVisible(true);
             }
             else if(e.getSource() == hygiene){
                 OSPCateg5 c5 = new OSPCateg5();
                 c5.setVisible(true);
             }
+            
     }
 
   
