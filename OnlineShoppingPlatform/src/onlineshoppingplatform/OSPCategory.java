@@ -16,9 +16,9 @@ public class OSPCategory {
     
     public OSPCategory() {
     
-    JFrame Category = new JFrame("CATEGORY");
+    JFrame Apparel = new JFrame("CATEGORY");
      
-    Category.setSize(600, 700);
+    Apparel.setSize(600, 700);
         
         //header
         categ = new JLabel("CATEGORIES");
@@ -54,10 +54,10 @@ public class OSPCategory {
         name4 = new JLabel("Women Floral V-Neck");
         
         //prices
-        price1 = new JLabel("$10");
-        price2 = new JLabel("$9");
-        price3 = new JLabel("$4");
-        price4 = new JLabel("$30");
+        price1 = new JLabel("$10.11");
+        price2 = new JLabel("$9.41");
+        price3 = new JLabel("$4.08");
+        price4 = new JLabel("$30.41");
         
         //header ooordinates
         
@@ -101,32 +101,32 @@ public class OSPCategory {
         price3.setBounds(305, 305, 150, 150);
         price4.setBounds(445, 305, 150, 150);
         
-        Category.add(categ);
-        Category.add(name);
-        Category.add(icon);
-        Category.add(home);
-        Category.add(apparel);
-        Category.add(appliances);
-        Category.add(furnitures);
-        Category.add(gadgets);
-        Category.add(hygiene);
-        Category.add(product1);
-        Category.add(product2);
-        Category.add(product3);
-        Category.add(product4);
-        Category.add(mapparel);
-        Category.add(wapparel);
-        Category.add(kapparel);
-        Category.add(acc);
-        Category.add(shoes);
-        Category.add(name1);
-        Category.add(name2);
-        Category.add(name3);
-        Category.add(name4);
-        Category.add(price1);
-        Category.add(price2);
-        Category.add(price3);
-        Category.add(price4);
+        Apparel.add(categ);
+        Apparel.add(name);
+        Apparel.add(icon);
+        Apparel.add(home);
+        Apparel.add(apparel);
+        Apparel.add(appliances);
+        Apparel.add(furnitures);
+        Apparel.add(gadgets);
+        Apparel.add(hygiene);
+        Apparel.add(product1);
+        Apparel.add(product2);
+        Apparel.add(product3);
+        Apparel.add(product4);
+        Apparel.add(mapparel);
+        Apparel.add(wapparel);
+        Apparel.add(kapparel);
+        Apparel.add(acc);
+        Apparel.add(shoes);
+        Apparel.add(name1);
+        Apparel.add(name2);
+        Apparel.add(name3);
+        Apparel.add(name4);
+        Apparel.add(price1);
+        Apparel.add(price2);
+        Apparel.add(price3);
+        Apparel.add(price4);
         
         mapparel.setFont(new Font("Arial", Font.PLAIN, 8));
         wapparel.setFont(new Font("Arial", Font.PLAIN, 8));
@@ -134,9 +134,9 @@ public class OSPCategory {
         acc.setFont(new Font("Arial", Font.PLAIN, 8));
         shoes.setFont(new Font("Arial", Font.PLAIN, 8));
         
-        Category.setLayout(null);            
-        Category.setVisible(true);
-        Category.setResizable(false);
-        Category.setDefaultCloseOperation(Category.EXIT_ON_CLOSE);
+        Apparel.setLayout(null);            
+        Apparel.setVisible(true);
+        Apparel.setResizable(false);
+        Apparel.setDefaultCloseOperation(Apparel.EXIT_ON_CLOSE);
 }
 }
