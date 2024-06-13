@@ -106,6 +106,7 @@ public class OSPCateg4 extends JFrame implements ActionListener{
         apparel.addActionListener(this);
         hygiene.addActionListener(this);
         gadgets.addActionListener(this);
+        home.addActionListener(this);
         
         Gadgets.add(categ);
         Gadgets.add(name);
@@ -170,10 +171,12 @@ public class OSPCateg4 extends JFrame implements ActionListener{
                 OSPCateg5 c5 = new OSPCateg5();
                 c5.setVisible(true);
             }
-            
+             else if(e.getSource() == home){
+               shopping menu = new shopping();
+                menu.setVisible(true);
     }
 
   
 
-   
+    }  
 }

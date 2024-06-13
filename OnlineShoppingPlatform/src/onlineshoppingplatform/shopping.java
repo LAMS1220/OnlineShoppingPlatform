@@ -123,6 +123,11 @@ public class shopping extends JFrame implements ActionListener{
         
         btnCart.addActionListener(this);
         btnPayment.addActionListener(this);
+        btnapparel.addActionListener(this);
+        btnappliances.addActionListener(this);
+        btnfurniture.addActionListener(this);
+        btngadgets.addActionListener(this);
+        btnhygiene.addActionListener(this);
         
         setLayout(null);
         setResizable(false);
@@ -141,7 +146,25 @@ public class shopping extends JFrame implements ActionListener{
             OSPCart cart = new OSPCart();
             cart.setVisible(true);
         }
-        
-}
-
+        else if(e.getSource() == btnapparel){
+            OSPCategory categ = new OSPCategory();
+            categ.setVisible(true);      
+        }
+        else if(e.getSource() == btnappliances){
+            OSPCateg2 appliance = new OSPCateg2();
+            appliance.setVisible(true);
+        }
+        else if(e.getSource() == btnfurniture){
+            OSPCateg3 furnitures = new OSPCateg3();
+            furnitures.setVisible(true);                    
+        }
+        else if(e.getSource() == btngadgets){
+            OSPCateg4 gadgets = new OSPCateg4();
+            gadgets.setVisible(true);    
+        }
+        else if(e.getSource() == btnhygiene){
+            OSPCateg5 hygiene = new OSPCateg5();
+            hygiene.setVisible(true);
+        }
+    }
 }

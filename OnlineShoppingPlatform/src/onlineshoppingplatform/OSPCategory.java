@@ -108,6 +108,7 @@ public class OSPCategory extends JFrame implements ActionListener{
         gadgets.addActionListener(this);
         hygiene.addActionListener(this);
         apparel.addActionListener(this);
+        home.addActionListener(this);
         
         Apparel.add(categ);
         Apparel.add(name);
@@ -152,7 +153,7 @@ public class OSPCategory extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent e) {
             dispose();
             
-            if(e.getSource() == apparel){
+           if(e.getSource() == apparel){
                 OSPCategory c1 = new OSPCategory();
                 c1.setVisible(true);
             }
@@ -172,6 +173,11 @@ public class OSPCategory extends JFrame implements ActionListener{
                 OSPCateg5 c5 = new OSPCateg5();
                 c5.setVisible(true);
             }
+            else if(e.getSource() == home){
+                shopping menu = new shopping();
+                menu.setVisible(true);
+            }
+            
             
      
     }
