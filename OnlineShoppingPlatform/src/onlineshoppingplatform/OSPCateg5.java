@@ -9,7 +9,7 @@ import java.awt.event.*;
  * @author noctafly
  */
 public class OSPCateg5 extends JFrame implements ActionListener{
-    private JButton apparel, appliances, furnitures, gadgets, hygiene,home;  
+    private JButton apparel, appliances, furnitures, gadgets, hygiene, shave, foot, deo, skin, shower, home;  
     private JLabel categ, name, name1, name2, name3, name4, price1, price2, price3, price4, product1, product2, product3, product4, icon;
     
     OSPCateg5() {
@@ -31,7 +31,14 @@ public class OSPCateg5 extends JFrame implements ActionListener{
         furnitures = new JButton("Furnitures");
         gadgets = new JButton("Gadgets");
         hygiene = new JButton("Hygiene");
- 
+        
+        //sub categories
+        shave = new JButton("Shaving");
+        foot = new JButton("Foot Care");
+        deo = new JButton("Deodorant");
+        skin = new JButton("Skin Care");
+        shower = new JButton("Shower");
+        
         //displayed products on category tab
         product1 = new JLabel("/product img/");
         product2 = new JLabel("/product img/");
@@ -66,7 +73,14 @@ public class OSPCateg5 extends JFrame implements ActionListener{
         furnitures.setBounds(240, 120, 100, 25);
         gadgets.setBounds(355, 120, 100, 25);
         hygiene.setBounds(470, 120, 100, 25);
- 
+        
+        //sub categories coordinates
+        shave.setBounds(25, 160, 90, 23);
+        foot.setBounds(135, 160, 95, 23);
+        deo.setBounds(250, 160, 90, 23);
+        skin.setBounds(360, 160, 90, 23);
+        shower.setBounds(470, 160, 90, 23);
+        
         //panel coordinates
         product1.setBounds(30, 200, 150, 150);
         product2.setBounds(170, 200, 150, 150);
@@ -106,6 +120,11 @@ public class OSPCateg5 extends JFrame implements ActionListener{
         Hygiene.add(product2);
         Hygiene.add(product3);
         Hygiene.add(product4);
+        Hygiene.add(shave);
+        Hygiene.add(foot);
+        Hygiene.add(deo);
+        Hygiene.add(skin);
+        Hygiene.add(shower);
         Hygiene.add(name1);
         Hygiene.add(name2);
         Hygiene.add(name3);
@@ -114,7 +133,13 @@ public class OSPCateg5 extends JFrame implements ActionListener{
         Hygiene.add(price2);
         Hygiene.add(price3);
         Hygiene.add(price4);
-  
+        
+        shave.setFont(new Font("Arial", Font.PLAIN, 8));
+        foot.setFont(new Font("Arial", Font.PLAIN, 8));
+        deo.setFont(new Font("Arial", Font.PLAIN, 8));
+        skin.setFont(new Font("Arial", Font.PLAIN, 8));
+        shower.setFont(new Font("Arial", Font.PLAIN, 8));
+        
         Hygiene.setLayout(null);            
         Hygiene.setVisible(true);
         Hygiene.setResizable(false);

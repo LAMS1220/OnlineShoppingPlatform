@@ -13,7 +13,7 @@ import java.awt.event.ActionListener;
 public class OSPCategory extends JFrame implements ActionListener{
             
     private JButton apparel, appliances, furnitures, gadgets, hygiene, mapparel, wapparel, kapparel, acc, shoes, home;  
-    private JLabel categ, name, name1, name2, name3, name4, price1, price2, price3, price4, product1, product2, product3, product4;
+    private JLabel categ, name, name1, name2, name3, name4, price1, price2, price3, price4, product1, product2, product3, product4, icon;
     
     OSPCategory() {
     
@@ -23,7 +23,8 @@ public class OSPCategory extends JFrame implements ActionListener{
         
         //header
         categ = new JLabel("CATEGORIES");
-        name = new JLabel("ONLINE SHOPPING PLATFORM");
+        name = new JLabel("OSP");
+        icon = new JLabel("/icon/");
         home = new JButton("HOME");
         
         
@@ -61,9 +62,10 @@ public class OSPCategory extends JFrame implements ActionListener{
         
         //header ooordinates
         
-        categ.setBounds(10, 0, 100, 50);
-        name.setBounds(10, 27, 200, 40);
-        home.setBounds(10, 65, 70, 25);
+        categ.setBounds(25, 0, 100, 50);
+        name.setBounds(120, 25, 40, 40);
+        icon.setBounds(25, 25, 40, 40);
+        home.setBounds(25, 65, 70, 25);
         
         //sizes
         categ.setFont(new Font("Ariel", Font.BOLD, 15 ));
@@ -74,7 +76,14 @@ public class OSPCategory extends JFrame implements ActionListener{
         furnitures.setBounds(240, 120, 100, 25);
         gadgets.setBounds(355, 120, 100, 25);
         hygiene.setBounds(470, 120, 100, 25);
-    
+        
+        //sub categories coordinates
+        mapparel.setBounds(25, 160, 90, 23);
+        wapparel.setBounds(135, 160, 95, 23);
+        kapparel.setBounds(250, 160, 90, 23);
+        acc.setBounds(360, 160, 90, 23);
+        shoes.setBounds(470, 160, 90, 23);
+        
         //panel coordinates
         product1.setBounds(30, 200, 150, 150);
         product2.setBounds(170, 200, 150, 150);
@@ -103,6 +112,7 @@ public class OSPCategory extends JFrame implements ActionListener{
         
         Apparel.add(categ);
         Apparel.add(name);
+        Apparel.add(icon);
         Apparel.add(home);
         Apparel.add(apparel);
         Apparel.add(appliances);
@@ -171,15 +181,4 @@ public class OSPCategory extends JFrame implements ActionListener{
             
      
     }
-    
-     public static void main(String[] args) {
-       //EventQueue.invokeLater(new Runnable(){
-         //  @Override
-           //public void run() {
-             //   OSPCategory categ = new OSPCategory();
-               // categ.setVisible(true);
-                 new OSPCategory() {};
-           }
-           
-    
 }

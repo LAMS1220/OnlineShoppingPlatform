@@ -15,7 +15,7 @@ import java.awt.event.*;
  * @author noctafly
  */
 public class OSPCateg2 extends JFrame implements ActionListener{
-    private JButton apparel, appliances, furnitures, gadgets, hygiene, home;  
+    private JButton apparel, appliances, furnitures, gadgets, hygiene, ref, efan, tv, ac, microwave, home;  
     private JLabel categ, name, name1, name2, name3, name4, price1, price2, price3, price4, product1, product2, product3, product4, icon;
     
     OSPCateg2() {
@@ -37,7 +37,14 @@ public class OSPCateg2 extends JFrame implements ActionListener{
         furnitures = new JButton("Furnitures");
         gadgets = new JButton("Gadgets");
         hygiene = new JButton("Hygiene");
-
+        
+        //sub categories
+        ref = new JButton("Refrigerator");
+        efan = new JButton("Electric Fan");
+        tv = new JButton("Television");
+        ac = new JButton("Aircon");
+        microwave = new JButton("Microwave");
+        
         //displayed products on category tab
         product1 = new JLabel("/product img/");
         product2 = new JLabel("/product img/");
@@ -72,6 +79,13 @@ public class OSPCateg2 extends JFrame implements ActionListener{
         furnitures.setBounds(240, 120, 100, 25);
         gadgets.setBounds(355, 120, 100, 25);
         hygiene.setBounds(470, 120, 100, 25);
+        
+        //sub categories coordinates
+        ref.setBounds(25, 160, 90, 23);
+        efan.setBounds(135, 160, 95, 23);
+        tv.setBounds(250, 160, 90, 23);
+        ac.setBounds(360, 160, 90, 23);
+        microwave.setBounds(470, 160, 90, 23);
         
         //panel coordinates
         product1.setBounds(30, 200, 150, 150);
@@ -112,6 +126,11 @@ public class OSPCateg2 extends JFrame implements ActionListener{
         appliance.add(product2);
         appliance.add(product3);
         appliance.add(product4);
+        appliance.add(ref);
+        appliance.add(efan);
+        appliance.add(tv);
+        appliance.add(ac);
+        appliance.add(microwave);
         appliance.add(name1);
         appliance.add(name2);
         appliance.add(name3);
@@ -120,6 +139,12 @@ public class OSPCateg2 extends JFrame implements ActionListener{
         appliance.add(price2);
         appliance.add(price3);
         appliance.add(price4);
+        
+        ref.setFont(new Font("Arial", Font.PLAIN, 8));
+        efan.setFont(new Font("Arial", Font.PLAIN, 8));
+        tv.setFont(new Font("Arial", Font.PLAIN, 8));
+        ac.setFont(new Font("Arial", Font.PLAIN, 8));
+        microwave.setFont(new Font("Arial", Font.PLAIN, 8));
         
         appliance.setLayout(null);            
         appliance.setVisible(true);

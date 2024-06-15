@@ -101,7 +101,6 @@ public class OSPCart extends JFrame implements ActionListener{
         
         //visible
         setResizable(false);
-        setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
     }
@@ -143,7 +142,5 @@ public class OSPCart extends JFrame implements ActionListener{
         }
         
 }
-     public static void main (String[]args){
-        new OSPCart() {};
-    }
+    
 }

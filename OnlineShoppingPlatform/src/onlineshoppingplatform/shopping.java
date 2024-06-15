@@ -15,14 +15,14 @@ import java.awt.event.ActionEvent;
  */
 public class shopping extends JFrame implements ActionListener{
     
-    private JLabel lblHomepage ,lblOSP, lblCategories ;
+    private JLabel lblHomepage ,lblOSP, lblCategories, lblproduct1, lblproduct2,lblproduct3 ,lblproduct4, lbltext1,lbltext2,lbltext3,lbltext4 ;
     private JTextField txtfldSearch;
     private JButton btnCart,btnPayment, btnapparel,btnappliances,btnfurniture, btngadgets, btnhygiene;
     
     shopping(){
         
         setTitle("Online Shopping Platform");
-        setSize(600,300);
+        setSize(600,700);
         
         lblHomepage = new JLabel("HOMEPAGE");
         lblHomepage.setBounds(10, 10, 100, 30);
@@ -69,6 +69,38 @@ public class shopping extends JFrame implements ActionListener{
         btnhygiene.setBounds(450, 150, 100, 30);
         btnhygiene.setFont(new Font("Arial", Font.BOLD, 10));
         
+        lblproduct1 = new JLabel ("IMAGE");
+        lblproduct1.setBounds(50, 350, 70, 25);
+        lblproduct1.setFont(new Font("Arial", Font.BOLD,15));
+        
+        lblproduct2 = new JLabel ("IMAGE");
+        lblproduct2.setBounds(200, 350, 70, 25);
+        lblproduct2.setFont(new Font("Arial", Font.BOLD,15));
+        
+        lblproduct3 = new JLabel ("IMAGE");
+        lblproduct3.setBounds(350, 350, 70, 25);
+        lblproduct3.setFont(new Font("Arial", Font.BOLD,15));
+        
+        lblproduct4 = new JLabel ("IMAGE");
+        lblproduct4.setBounds(475, 350, 70, 25);
+        lblproduct4.setFont(new Font("Arial", Font.BOLD,15));
+        
+        lbltext1 = new JLabel ("DESCRIPTION");
+        lbltext1.setBounds(50, 370, 100, 25);
+        lbltext1.setFont(new Font("Arial", Font.BOLD,10));
+        
+        lbltext2 = new JLabel ("DESCRIPTION");
+        lbltext2.setBounds(200, 370, 100, 25);
+        lbltext2.setFont(new Font("Arial", Font.BOLD,10));
+        
+        lbltext3 = new JLabel ("DESCRIPTION");
+        lbltext3.setBounds(350, 370, 100, 25);
+        lbltext3.setFont(new Font("Arial", Font.BOLD,10));
+        
+        lbltext4 = new JLabel ("DESCRIPTION");
+        lbltext4.setBounds(475, 370, 100, 25);
+        lbltext4.setFont(new Font("Arial", Font.BOLD,10));
+        
         add(lblHomepage);    
         add(lblOSP);
         add(txtfldSearch);
@@ -80,6 +112,14 @@ public class shopping extends JFrame implements ActionListener{
         add(btnfurniture);
         add(btngadgets);
         add(btnhygiene);
+        add(lblproduct1);
+        add(lblproduct2);
+        add(lblproduct3);
+        add(lblproduct4);
+        add(lbltext1);
+        add(lbltext2);
+        add(lbltext3);
+        add(lbltext4);
         
         btnCart.addActionListener(this);
         btnPayment.addActionListener(this);
@@ -91,7 +131,6 @@ public class shopping extends JFrame implements ActionListener{
         
         setLayout(null);
         setResizable(false);
-        setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
     
@@ -127,9 +166,5 @@ public class shopping extends JFrame implements ActionListener{
             OSPCateg5 hygiene = new OSPCateg5();
             hygiene.setVisible(true);
         }
-    }
-    
-    public static void main (String[]args){
-        new shopping();  
     }
 }

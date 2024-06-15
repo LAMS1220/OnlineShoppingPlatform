@@ -10,7 +10,7 @@ import javax.swing.*;
  *
  * @author ACER
  */
-public class Admin extends JFrame{
+public class Admin extends JFrame {
     
     private JLabel lblname, lblpw;
     private JTextField uname, pass;
@@ -44,10 +44,9 @@ public class Admin extends JFrame{
          
          setLayout(null);
          setResizable(false);
+         setVisible(true); 
          setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
-    public static void main(String[]args){
-        new Admin (); 
-}
+   
 }
 
