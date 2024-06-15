@@ -10,7 +10,7 @@ import java.awt.event.*;
  * @author noctafly
  */
 public class OSPCateg4 extends JFrame implements ActionListener{
-    private JButton apparel, appliances, furnitures, gadgets, hygiene, mobile, pc, tablet, watch, peripherals, home;  
+    private JButton apparel, appliances, furnitures, gadgets, hygiene,home;  
     private JLabel categ, name, name1, name2, name3, name4, price1, price2, price3, price4, product1, product2, product3, product4, icon;
     
     OSPCateg4() {
@@ -32,14 +32,7 @@ public class OSPCateg4 extends JFrame implements ActionListener{
         furnitures = new JButton("Furnitures");
         gadgets = new JButton("Gadgets");
         hygiene = new JButton("Hygiene");
-        
-        //sub categories
-        mobile = new JButton("Mobile Phones");
-        pc = new JButton("Personal Computers");
-        tablet = new JButton("Tablets");
-        watch = new JButton("Smart Watch");
-        peripherals = new JButton("Peripherals");
-        
+
         //displayed products on category tab
         product1 = new JLabel("/product img/");
         product2 = new JLabel("/product img/");
@@ -74,14 +67,7 @@ public class OSPCateg4 extends JFrame implements ActionListener{
         furnitures.setBounds(240, 120, 100, 25);
         gadgets.setBounds(355, 120, 100, 25);
         hygiene.setBounds(470, 120, 100, 25);
-        
-        //sub categories coordinates
-        mobile.setBounds(25, 160, 90, 23);
-        pc.setBounds(135, 160, 95, 23);
-        tablet.setBounds(250, 160, 90, 23);
-        watch.setBounds(360, 160, 90, 23);
-        peripherals.setBounds(470, 160, 90, 23);
-        
+
         //panel coordinates
         product1.setBounds(30, 200, 150, 150);
         product2.setBounds(170, 200, 150, 150);
@@ -121,11 +107,6 @@ public class OSPCateg4 extends JFrame implements ActionListener{
         Gadgets.add(product2);
         Gadgets.add(product3);
         Gadgets.add(product4);
-        Gadgets.add(mobile);
-        Gadgets.add(pc);
-        Gadgets.add(tablet);
-        Gadgets.add(watch);
-        Gadgets.add(peripherals);
         Gadgets.add(name1);
         Gadgets.add(name2);
         Gadgets.add(name3);
@@ -134,13 +115,7 @@ public class OSPCateg4 extends JFrame implements ActionListener{
         Gadgets.add(price2);
         Gadgets.add(price3);
         Gadgets.add(price4);
-        
-        mobile.setFont(new Font("Arial", Font.PLAIN, 8));
-        pc.setFont(new Font("Arial", Font.PLAIN, 8));
-        tablet.setFont(new Font("Arial", Font.PLAIN, 8));
-        watch.setFont(new Font("Arial", Font.PLAIN, 8));
-        peripherals.setFont(new Font("Arial", Font.PLAIN, 8));
-        
+       
         Gadgets.setLayout(null);            
         Gadgets.setVisible(true);
         Gadgets.setResizable(false);

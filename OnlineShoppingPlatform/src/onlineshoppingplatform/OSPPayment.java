@@ -91,11 +91,12 @@ public class OSPPayment extends JFrame implements ActionListener{
         add(cmbmop);
 
         setLayout(null);
+        setVisible(true);
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
     
-  
+    @Override
     public void actionPerformed (ActionEvent e){
         
         dispose();
@@ -109,4 +110,8 @@ public class OSPPayment extends JFrame implements ActionListener{
         }
         
 }
+     public static void main(String[] args) {
+       new OSPPayment() {};
+               
+    }
 }

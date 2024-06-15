@@ -5,6 +5,7 @@
  */
 package onlineshoppingplatform;
  
+import java.awt.EventQueue;
 import java.awt.Font;
 import javax.swing.*;
 import java.awt.event.*;
@@ -33,20 +34,18 @@ public class LogIn extends JFrame implements ActionListener{
         add(btncust);
         add(btnadmin);
         
-        lblname.setBounds(170, 40, 200, 80);
+        lblname.setBounds (170, 40, 200, 80);
         btncust.setBounds(260, 120  , 100, 30);
         btnadmin.setBounds(130, 120, 100, 30);
         
         btncust.addActionListener(this);
+        btnadmin.addActionListener(this);
         //btnadmin.addActionListener(this);
         
         setLayout(null);
         setResizable(false);
         setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);
-        
-        
-        
-        
+
     }
     
     @Override
@@ -59,10 +58,26 @@ public class LogIn extends JFrame implements ActionListener{
         dispose();
         }
         
-        //else if (e.getSource()== btnadmin){
-        //class for the table
+        else if (e.getSource()== btnadmin){
+        Admin ad = new Admin();
+        ad.setVisible(true);
+        dispose();
         }
     }
+
+public static void main(String[] args) {
+        // TODO code application logic here
+            EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                LogIn login = new LogIn();
+                login.setVisible(true);
+            }
+        });
+    
+    }
+
+}
     
 
 
