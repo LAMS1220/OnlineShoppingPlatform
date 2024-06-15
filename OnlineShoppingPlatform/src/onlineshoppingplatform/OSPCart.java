@@ -131,7 +131,6 @@ public class OSPCart extends JFrame implements ActionListener{
         
         lblAmount.setText("AMOUNT: $"+(counter+counter2));
         
-        dispose();
         if(e.getSource() == btnHome){
             shopping menu = new shopping();
             menu.setVisible(true);
@@ -139,6 +138,7 @@ public class OSPCart extends JFrame implements ActionListener{
         }else if (e.getSource() == btnPayment) {
             OSPPayment payment = new OSPPayment();
             payment.setVisible(true);
+            
         }
         
 }
