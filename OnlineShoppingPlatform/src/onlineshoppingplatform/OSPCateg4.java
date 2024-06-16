@@ -11,7 +11,7 @@ import java.awt.event.*;
  */
 public class OSPCateg4 extends JFrame implements ActionListener{
     private JButton apparel, appliances, furnitures, gadgets, hygiene, home;  
-    private JLabel categ, name, name1, name2, name3, name4, price1, price2, price3, price4, product1, product2, product3, product4, icon;
+    private JLabel categ, name, name1, name2, name3, name4, price1, price2, price3, price4, product1, product2, product3, product4;
     
     OSPCateg4() {
     
@@ -22,15 +22,15 @@ public class OSPCateg4 extends JFrame implements ActionListener{
         //header
         categ = new JLabel("CATEGORIES");
         name = new JLabel("OSP");
-        icon = new JLabel("/icon/");
         home = new JButton("HOME");
-                
+        
+        
         //main categories
         apparel = new JButton("Apparel");
         appliances = new JButton("Appliances");
         furnitures = new JButton("Furnitures");
         gadgets = new JButton("Gadgets");
-        hygiene = new JButton("Hygiene");        
+        hygiene = new JButton("Hygiene");
         
         //displayed products on category tab
         product1 = new JLabel("/product img/");
@@ -54,7 +54,6 @@ public class OSPCateg4 extends JFrame implements ActionListener{
         
         categ.setBounds(25, 0, 100, 50);
         name.setBounds(120, 25, 40, 40);
-        icon.setBounds(25, 25, 40, 40);
         home.setBounds(25, 65, 70, 25);
         
         //sizes
@@ -95,7 +94,6 @@ public class OSPCateg4 extends JFrame implements ActionListener{
         
         Gadgets.add(categ);
         Gadgets.add(name);
-        Gadgets.add(icon);
         Gadgets.add(home);
         Gadgets.add(apparel);
         Gadgets.add(appliances);
@@ -115,7 +113,6 @@ public class OSPCateg4 extends JFrame implements ActionListener{
         Gadgets.add(price3);
         Gadgets.add(price4);
         
-       
         Gadgets.setLayout(null);            
         Gadgets.setVisible(true);
         Gadgets.setResizable(false);

@@ -9,8 +9,8 @@ import java.awt.event.*;
  * @author noctafly
  */
 public class OSPCateg5 extends JFrame implements ActionListener{
-    private JButton apparel, appliances, furnitures, gadgets, hygiene, home;  
-    private JLabel categ, name, name1, name2, name3, name4, price1, price2, price3, price4, product1, product2, product3, product4, icon;
+    private JButton apparel, appliances, furnitures, gadgets, hygiene,  home;  
+    private JLabel categ, name, name1, name2, name3, name4, price1, price2, price3, price4, product1, product2, product3, product4;
     
     OSPCateg5() {
     
@@ -21,7 +21,6 @@ public class OSPCateg5 extends JFrame implements ActionListener{
         //header
         categ = new JLabel("CATEGORIES");
         name = new JLabel("OSP");
-        icon = new JLabel("/icon/");
         home = new JButton("HOME");
         
         
@@ -31,7 +30,6 @@ public class OSPCateg5 extends JFrame implements ActionListener{
         furnitures = new JButton("Furnitures");
         gadgets = new JButton("Gadgets");
         hygiene = new JButton("Hygiene");
-       
         
         //displayed products on category tab
         product1 = new JLabel("/product img/");
@@ -55,7 +53,6 @@ public class OSPCateg5 extends JFrame implements ActionListener{
         
         categ.setBounds(25, 0, 100, 50);
         name.setBounds(120, 25, 40, 40);
-        icon.setBounds(25, 25, 40, 40);
         home.setBounds(25, 65, 70, 25);
         
         //sizes
@@ -67,8 +64,6 @@ public class OSPCateg5 extends JFrame implements ActionListener{
         furnitures.setBounds(240, 120, 100, 25);
         gadgets.setBounds(355, 120, 100, 25);
         hygiene.setBounds(470, 120, 100, 25);
-        
-    
         
         //panel coordinates
         product1.setBounds(30, 200, 150, 150);
@@ -98,7 +93,6 @@ public class OSPCateg5 extends JFrame implements ActionListener{
         
         Hygiene.add(categ);
         Hygiene.add(name);
-        Hygiene.add(icon);
         Hygiene.add(home);
         Hygiene.add(apparel);
         Hygiene.add(appliances);
@@ -118,7 +112,6 @@ public class OSPCateg5 extends JFrame implements ActionListener{
         Hygiene.add(price3);
         Hygiene.add(price4);
         
-       
         Hygiene.setLayout(null);            
         Hygiene.setVisible(true);
         Hygiene.setResizable(false);
