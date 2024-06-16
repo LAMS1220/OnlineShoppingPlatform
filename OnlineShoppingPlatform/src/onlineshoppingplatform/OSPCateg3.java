@@ -11,8 +11,8 @@ import java.awt.event.*;
  */
 public class OSPCateg3 extends JFrame implements ActionListener{
     
-    private JButton apparel, appliances, furnitures, gadgets, hygiene, bed, table, chair, lamp, cabinet, home;  
-    private JLabel categ, name, name1, name2, name3, name4, price1, price2, price3, price4, product1, product2, product3, product4, icon;
+    private JButton apparel, appliances, furnitures, gadgets, hygiene,  home;  
+    private JLabel categ, name, name1, name2, name3, name4, price1, price2, price3, price4, product1, product2, product3, product4;
     
     OSPCateg3() {
     
@@ -23,7 +23,6 @@ public class OSPCateg3 extends JFrame implements ActionListener{
         //header
         categ = new JLabel("CATEGORIES");
         name = new JLabel("OSP");
-        icon = new JLabel("/icon/");
         home = new JButton("HOME");
         
         
@@ -33,13 +32,6 @@ public class OSPCateg3 extends JFrame implements ActionListener{
         furnitures = new JButton("Furnitures");
         gadgets = new JButton("Gadgets");
         hygiene = new JButton("Hygiene");
-        
-        //sub categories
-        bed = new JButton("Bed");
-        table = new JButton("Table");
-        chair = new JButton("Chair");
-        lamp = new JButton("Lamp");
-        cabinet = new JButton("Cabinet");
         
         //displayed products on category tab
         product1 = new JLabel("/product img/");
@@ -63,7 +55,6 @@ public class OSPCateg3 extends JFrame implements ActionListener{
         
         categ.setBounds(25, 0, 100, 50);
         name.setBounds(120, 25, 40, 40);
-        icon.setBounds(25, 25, 40, 40);
         home.setBounds(25, 65, 70, 25);
         
         //sizes
@@ -75,13 +66,6 @@ public class OSPCateg3 extends JFrame implements ActionListener{
         furnitures.setBounds(240, 120, 100, 25);
         gadgets.setBounds(355, 120, 100, 25);
         hygiene.setBounds(470, 120, 100, 25);
-        
-        //sub categories coordinates
-        bed.setBounds(25, 160, 90, 23);
-        table.setBounds(135, 160, 95, 23);
-        chair.setBounds(250, 160, 90, 23);
-        lamp.setBounds(360, 160, 90, 23);
-        cabinet.setBounds(470, 160, 90, 23);
         
         //panel coordinates
         product1.setBounds(30, 200, 150, 150);
@@ -111,7 +95,6 @@ public class OSPCateg3 extends JFrame implements ActionListener{
         
         Furnitures.add(categ);
         Furnitures.add(name);
-        Furnitures.add(icon);
         Furnitures.add(home);
         Furnitures.add(apparel);
         Furnitures.add(appliances);
@@ -122,11 +105,6 @@ public class OSPCateg3 extends JFrame implements ActionListener{
         Furnitures.add(product2);
         Furnitures.add(product3);
         Furnitures.add(product4);
-        Furnitures.add(bed);
-        Furnitures.add(table);
-        Furnitures.add(chair);
-        Furnitures.add(lamp);
-        Furnitures.add(cabinet);
         Furnitures.add(name1);
         Furnitures.add(name2);
         Furnitures.add(name3);
@@ -135,12 +113,6 @@ public class OSPCateg3 extends JFrame implements ActionListener{
         Furnitures.add(price2);
         Furnitures.add(price3);
         Furnitures.add(price4);
-        
-        bed.setFont(new Font("Arial", Font.PLAIN, 8));
-        table.setFont(new Font("Arial", Font.PLAIN, 8));
-        chair.setFont(new Font("Arial", Font.PLAIN, 8));
-        lamp.setFont(new Font("Arial", Font.PLAIN, 8));
-        cabinet.setFont(new Font("Arial", Font.PLAIN, 8));
         
         Furnitures.setLayout(null);            
         Furnitures.setVisible(true);

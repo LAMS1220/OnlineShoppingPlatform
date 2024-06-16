@@ -5,6 +5,7 @@
  */
 package onlineshoppingplatform;
  
+import java.awt.EventQueue;
 import java.awt.Font;
 import javax.swing.*;
 import java.awt.event.*;
@@ -62,6 +63,17 @@ public class LogIn extends JFrame implements ActionListener{
         //else if (e.getSource()== btnadmin){
         //class for the table
         }
+    
+     public static void main(String[] args) {
+            EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                LogIn login = new LogIn();
+                login.setVisible(true);
+            }
+        });
+    
+    }
     }
     
 
