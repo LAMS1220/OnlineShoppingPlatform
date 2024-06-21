@@ -1,149 +1,114 @@
 package onlineshoppingplatform;
 
-import java.awt.Font;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.*;
 
+public class OSPCart extends JFrame implements ActionListener {
+    private JTable cartTable;
+    private JButton btnConfirm;
+    private DefaultTableModel tableModel;
 
+    private DBManager dbManager;
 
-public class OSPCart extends JFrame implements ActionListener{
-    
-    private int counter = 0;
-    private int counter2 = 0;
-    private JButton btnAdd, btnSub, btnDel, btnAdd2, btnSub2, btnDel2, btnHome, btnPayment ;
-    private JLabel lblQuantity, lblImage, lblQuantity2, lblImage2, lblCart, lblAmount;
-  
-    
-    
-    OSPCart(){
-        //size of frame
-        //font
-        setSize(600,700);
-        
-        //components
-        lblCart = new JLabel ("CART QUERY");
-        lblCart.setFont(new Font ("Arial", Font.BOLD, 15));
-        lblAmount = new JLabel ("AMOUNT: ");
-        lblAmount.setFont(new Font ("Arial", Font.BOLD, 15));
-        btnHome = new JButton("HOME");
-        btnPayment = new JButton("CHECK OUT");
-        
-        btnAdd = new JButton("+");
-        btnSub = new JButton("-");
-        btnDel = new JButton("Delete");
-        lblQuantity = new JLabel("Quantity: 0");
-        lblImage = new JLabel("image placeholder");
-        
-        //2nd
-        btnAdd2 = new JButton("+");
-        btnSub2 = new JButton("-");
-        btnDel2 = new JButton("Delete");
-        lblQuantity2 = new JLabel("Quantity: 0");
-        lblImage2 = new JLabel("image placeholder");
-        
-        //add to frame
-        add(lblCart);
-        add(lblAmount);
-        add(btnPayment);
-        add(btnHome);
-        
-        add(btnAdd);
-        add(btnSub);
-        add(btnDel);
-        add(lblQuantity);
-        add(lblImage);
-        
-        //2nd
-        add(btnAdd2);
-        add(btnSub2);
-        add(btnDel2);
-        add(lblQuantity2);
-        add(lblImage2);
-        
-        //location
-        btnHome.setBounds(25, 80, 70, 25);
-        lblCart.setBounds(25, 0, 100, 100);
-        
-        
-        lblAmount.setBounds(400, 410, 100, 200);
-        btnPayment.setBounds(400, 550,120, 25);
+    public OSPCart() {
+        setTitle("Shopping Cart");
+        setSize(600, 400);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-        btnAdd.setBounds(200, 290, 45, 25);
-        btnSub.setBounds(325, 290, 45, 25);
-        btnDel.setBounds(400, 290, 75, 25);
-        lblQuantity.setBounds(255, 280, 200, 50);
-        lblImage.setBounds(75, 240, 100, 100);
-        
-        //2nd
-        btnAdd2.setBounds(200, 400, 45, 25);
-        btnSub2.setBounds(325, 400, 45, 25);
-        btnDel2.setBounds(400, 400, 75, 25);
-        lblQuantity2.setBounds(255, 390, 200, 50);
-        lblImage2.setBounds(75, 350, 100, 100);
-        
-        //listener
-        btnAdd.addActionListener(this);
-        btnSub.addActionListener(this);
-        btnDel.addActionListener(this);
-        
-        //2nd
-        btnAdd2.addActionListener(this);
-        btnSub2.addActionListener(this);
-        btnDel2.addActionListener(this);
-        
-        btnPayment.addActionListener(this);
-        btnHome.addActionListener(this);
-        
-        //layout
-        setLayout(null);
-        
-        
-        //visible
-        setResizable(false);
+        String[] columnNames = {"Item", "Description", "Price", "Quantity"};
+        tableModel = new DefaultTableModel(columnNames, 0);
+        cartTable = new JTable(tableModel);
+
+        JScrollPane scrollPane = new JScrollPane(cartTable);
+        scrollPane.setBounds(20, 20, 560, 280);
+
+        JPanel panel = new JPanel();
+        panel.setLayout(null);
+        panel.add(scrollPane);
+
+        JButton btnUpdateItem = new JButton("Update Item");
+        btnUpdateItem.setBounds(20, 320, 100, 30);
+        btnUpdateItem.addActionListener(this);
+
+        JButton btnDeleteItem = new JButton("Delete Item");
+        btnDeleteItem.setBounds(130, 320, 100, 30);
+        btnDeleteItem.addActionListener(this);
+
+        btnConfirm = new JButton("Confirm");
+        btnConfirm.setBounds(240, 320, 100, 30);
+        btnConfirm.addActionListener(this);
+
+        panel.add(btnUpdateItem);
+        panel.add(btnDeleteItem);
+        panel.add(btnConfirm);
+
+        add(panel);
+
+        dbManager = new DBManager(); // Initialize DBManager
+        loadCartItems(); // Load items from the database into the cart
+
         setVisible(true);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
     }
+
+    private void loadCartItems() {
+        try {
+            ResultSet resultSet = dbManager.getCartItems();
+
+            while (resultSet.next()) {
+                String item = resultSet.getString("item");
+                String description = resultSet.getString("description");
+                double price = resultSet.getDouble("price");
+                int quantity = resultSet.getInt("quantity");
+
+                tableModel.addRow(new Object[]{item, description, price, quantity});
+            }
+
+            resultSet.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
-    public void actionPerformed (ActionEvent e){
-        
-        if (e.getSource() == btnAdd){
-            counter ++;         
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == btnConfirm) {
+            int rowCount = tableModel.getRowCount();
+            if (rowCount > 0) {
+                // StringBuilder to collect selected items
+                StringBuilder selectedItems = new StringBuilder();
+
+                // Calculate total price
+                double totalPrice = 0;
+                for (int i = 0; i < rowCount; i++) {
+                    String item = (String) tableModel.getValueAt(i, 0);
+                    int quantity = Integer.parseInt(tableModel.getValueAt(i, 3).toString());
+                    double price = Double.parseDouble(tableModel.getValueAt(i, 2).toString());
+                    totalPrice += price * quantity;
+
+                    // Append item to selectedItems list
+                    selectedItems.append(item).append(", ");
+                }
+
+                // Remove the last comma and space
+                if (selectedItems.length() > 0) {
+                    selectedItems.setLength(selectedItems.length() - 2);
+                }
+
+                // Open OSPPayment with selected items and total price
+                new OSPPayment(selectedItems.toString(), totalPrice, dbManager);
+                dispose(); // Close the current frame (OSPCart)
+            } else {
+                JOptionPane.showMessageDialog(this, "Your cart is empty.");
+            }
+        } else {
+            // Implement add, update, and delete item logic here
         }
-        if (e.getSource() == btnAdd2){
-            counter2 ++;
-        }
-        if (e.getSource() == btnSub){
-            counter --;  
-        }
-        if (e.getSource() == btnSub2){
-            counter2 --;  
-        }
-        if (e.getSource() == btnDel){
-            counter = 0;
-        }
-        if (e.getSource() == btnDel2){
-            counter2 = 0;
-        }
-        lblQuantity.setText("Quantity: "+counter);
-        
-        lblQuantity2.setText("Quantity: "+counter2);
-        
-        lblAmount.setText("AMOUNT: $"+(counter+counter2));
-        
-        if(e.getSource() == btnHome){
-            shopping menu = new shopping();
-            menu.setVisible(true);
-            
-        }else if (e.getSource() == btnPayment) {
-            OSPPayment payment = new OSPPayment();
-            payment.setVisible(true);
-            
-        }
-        
-}
-    public static void main (String[]args){
-        new OSPCart();
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> new OSPCart());
     }
 }

@@ -9,8 +9,8 @@ import java.awt.event.*;
  * @author noctafly
  */
 public class OSPCateg5 extends JFrame implements ActionListener{
-    private JButton apparel, appliances, furnitures, gadgets, hygiene,  home;  
-    private JLabel categ, name, name1, name2, name3, name4, price1, price2, price3, price4, product1, product2, product3, product4;
+    private JButton apparel, appliances, furnitures, gadgets, hygiene, home, cart1, cart2, cart3, cart4, cart;  
+    private JLabel categ, name, name1, name2, name3, name4, price1, price2, price3, price4, product1, product2, product3, product4, mouthwash, wipes, adorn, shaver ;
     
     OSPCateg5() {
     
@@ -23,6 +23,8 @@ public class OSPCateg5 extends JFrame implements ActionListener{
         name = new JLabel("OSP");
         home = new JButton("HOME");
         
+        //cart button
+        cart = new JButton("CART");
         
         //main categories
         apparel = new JButton("Apparel");
@@ -31,11 +33,28 @@ public class OSPCateg5 extends JFrame implements ActionListener{
         gadgets = new JButton("Gadgets");
         hygiene = new JButton("Hygiene");
         
+        //1st gadget image
+        mouthwash = new JLabel();
+        mouthwash.setIcon(new ImageIcon(new ImageIcon("C:\\Users\\noctafly\\Desktop\\New Folder (2)\\New Folder\\New Folder\\kaks\\asand\\pogiako\\New Folder\\New Folder\\New Folder\\OnlineShoppingPlatform\\OnlineShoppingPlatform\\src\\onlineshoppingplatform\\listerine.png").getImage().getScaledInstance(90, 150, Image.SCALE_SMOOTH)));
+              
+        //2nd gadget image
+        wipes = new JLabel();
+        wipes.setIcon(new ImageIcon(new ImageIcon("C:\\Users\\noctafly\\Desktop\\New Folder (2)\\New Folder\\New Folder\\kaks\\asand\\pogiako\\New Folder\\New Folder\\New Folder\\OnlineShoppingPlatform\\OnlineShoppingPlatform\\src\\onlineshoppingplatform\\wipes.png").getImage().getScaledInstance(110, 100, Image.SCALE_SMOOTH)));
+        
+        //3rd gadget image
+        adorn = new JLabel();
+        adorn.setIcon(new ImageIcon(new ImageIcon("C:\\Users\\noctafly\\Desktop\\New Folder (2)\\New Folder\\New Folder\\kaks\\asand\\pogiako\\New Folder\\New Folder\\New Folder\\OnlineShoppingPlatform\\OnlineShoppingPlatform\\src\\onlineshoppingplatform\\adorn.png").getImage().getScaledInstance(110, 130, Image.SCALE_SMOOTH)));
+  
+        //4th gadget image
+        shaver = new JLabel();
+        shaver.setIcon(new ImageIcon(new ImageIcon("C:\\Users\\noctafly\\Desktop\\New Folder (2)\\New Folder\\New Folder\\kaks\\asand\\pogiako\\New Folder\\New Folder\\New Folder\\OnlineShoppingPlatform\\OnlineShoppingPlatform\\src\\onlineshoppingplatform\\shaver.png").getImage().getScaledInstance(120, 135, Image.SCALE_SMOOTH)));
+        
+        
         //displayed products on category tab
-        product1 = new JLabel("/product img/");
-        product2 = new JLabel("/product img/");
-        product3 = new JLabel("/product img/");
-        product4 = new JLabel("/product img/");
+        product1 = new JLabel();
+        product2 = new JLabel();
+        product3 = new JLabel();
+        product4 = new JLabel();
         
         //product names
         name1 = new JLabel("Listerine Mouthwash");
@@ -49,8 +68,13 @@ public class OSPCateg5 extends JFrame implements ActionListener{
         price3 = new JLabel("$4.32");
         price4 = new JLabel("$2.51");
         
-        //header ooordinates
+        //add to cart buttons
+        cart1 = new JButton("Add to Cart");
+        cart2 = new JButton("Add to Cart");
+        cart3 = new JButton("Add to Cart");
+        cart4 = new JButton("Add to Cart");
         
+        //header ooordinates       
         categ.setBounds(25, 0, 100, 50);
         name.setBounds(120, 25, 40, 40);
         home.setBounds(25, 65, 70, 25);
@@ -71,6 +95,12 @@ public class OSPCateg5 extends JFrame implements ActionListener{
         product3.setBounds(310, 200, 150, 150);
         product4.setBounds(450, 200, 150, 150);
         
+        //images coordinates
+        mouthwash.setBounds(30, 200, 150, 150);
+        wipes.setBounds(160, 200, 150, 150);
+        adorn.setBounds(300, 200, 150, 150);
+        shaver.setBounds(445, 200, 150, 150);
+        
         //names coordinates
         name1.setBounds(25, 290, 150, 150);
         name2.setBounds(165, 290, 150, 150);
@@ -83,6 +113,15 @@ public class OSPCateg5 extends JFrame implements ActionListener{
         price3.setBounds(305, 305, 150, 150);
         price4.setBounds(445, 305, 150, 150);
         
+         //add to cart coordinates
+        cart1.setBounds(20, 390, 100, 25);
+        cart2.setBounds(160, 390, 100, 25);
+        cart3.setBounds(300, 390, 100, 25);
+        cart4.setBounds(440, 390, 100, 25);
+        
+        //cart button coordinates
+        cart.setBounds(490, 450, 70, 25);
+        
          //Action Listener
         appliances.addActionListener(this);
         furnitures.addActionListener(this);
@@ -90,6 +129,7 @@ public class OSPCateg5 extends JFrame implements ActionListener{
         apparel.addActionListener(this);
         gadgets.addActionListener(this);
         home.addActionListener(this);
+        cart.addActionListener(this);
         
         Hygiene.add(categ);
         Hygiene.add(name);
@@ -111,6 +151,15 @@ public class OSPCateg5 extends JFrame implements ActionListener{
         Hygiene.add(price2);
         Hygiene.add(price3);
         Hygiene.add(price4);
+        Hygiene.add(mouthwash);
+        Hygiene.add(wipes);
+        Hygiene.add(adorn);
+        Hygiene.add(shaver);
+        Hygiene.add(cart);
+        Hygiene.add(cart1);
+        Hygiene.add(cart2);
+        Hygiene.add(cart3);
+        Hygiene.add(cart4);
         
         Hygiene.setLayout(null);            
         Hygiene.setVisible(true);
@@ -144,10 +193,13 @@ public class OSPCateg5 extends JFrame implements ActionListener{
             }
              else if(e.getSource() == home){
                shopping menu = new shopping();
-                menu.setVisible(true);
-            
+                menu.setVisible(true);     
     }
+            else if(e.getSource() == cart){
+               OSPCart cart = new OSPCart();
+               cart.setVisible(true);
 
    
+    }
     }
 }
