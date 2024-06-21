@@ -1,136 +1,174 @@
 package onlineshoppingplatform;
 
 import javax.swing.*;
-import java.awt.Font;
-import java.awt.event.ActionListener;
+import java.awt.*;
 import java.awt.event.ActionEvent;
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+import java.awt.event.ActionListener;
 
-/**
- *
- * @author alzona
- */
-public class shopping extends JFrame implements ActionListener{
-    
-    private JLabel lblHomepage ,lblOSP, lblCategories;
-    private JTextField txtfldSearch;
-    private JButton btnCart,btnPayment, btnapparel,btnappliances,btnfurniture, btngadgets, btnhygiene;
-    
-    shopping(){
-        
-        setTitle("Online Shopping Platform");
-        setSize(600,300);
-        
-        lblHomepage = new JLabel("HOMEPAGE");
-        lblHomepage.setBounds(10, 10, 100, 30);
-        lblHomepage.setFont(new Font("Arial", Font.BOLD, 15));
-        
-        lblOSP = new JLabel("ONLINE SHOPPING PLATFORM");
-        lblOSP.setBounds(10, 50, 250, 30);
-        lblOSP.setFont(new Font("Arial", Font.BOLD, 15));
-        
-        lblCategories = new JLabel("CATEGORIES");
-        lblCategories.setBounds(10, 120, 150, 30);
-        lblCategories.setFont(new Font("Arial", Font.BOLD, 15));
-        
-        txtfldSearch = new JTextField();
-        txtfldSearch.setBounds(10, 80, 220,30);
-        txtfldSearch.setFont(new Font("Arial", Font.PLAIN, 15));
-        
-        btnCart = new JButton("CART");
-        btnCart.setBounds(250, 80, 100, 30);
-        btnCart.setFont(new Font("Arial", Font.BOLD, 15));
-        
-        btnPayment = new JButton("PAYMENT");
-        btnPayment.setBounds(360, 80, 110, 30);
-        
-        btnPayment.setFont(new Font("Arial", Font.BOLD, 15));
-        
-        btnapparel = new JButton("APPAREL");
-        btnapparel.setBounds(10, 150, 100, 30);
-        btnapparel.setFont(new Font("Arial", Font.BOLD, 10));
-        
-        btnappliances = new JButton("APPLIANCES");
-        btnappliances.setBounds(120, 150, 100, 30);
-        btnappliances.setFont(new Font("Arial", Font.BOLD, 10));
-        
-        btnfurniture = new JButton("FURNITURE");
-        btnfurniture.setBounds(230, 150, 100, 30);
-        btnfurniture.setFont(new Font("Arial", Font.BOLD, 10));
-        
-        btngadgets = new JButton("GADGETS");
-        btngadgets.setBounds(340, 150, 100, 30);
-        btngadgets.setFont(new Font("Arial", Font.BOLD, 10));
-        
-        btnhygiene = new JButton("HYGIENE");
-        btnhygiene.setBounds(450, 150, 100, 30);
-        btnhygiene.setFont(new Font("Arial", Font.BOLD, 10));
-        
-        add(lblHomepage);    
-        add(lblOSP);
-        add(txtfldSearch);
-        add(btnCart);
-        add(btnPayment);
-        add(lblCategories);
-        add(btnapparel);
-        add(btnappliances);
-        add(btnfurniture);
-        add(btngadgets);
-        add(btnhygiene);
-        
-        btnCart.addActionListener(this);
-        btnPayment.addActionListener(this);
-        btnapparel.addActionListener(this);
-        btnappliances.addActionListener(this);
-        btnfurniture.addActionListener(this);
-        btngadgets.addActionListener(this);
-        btnhygiene.addActionListener(this);
-        
+public class shopping extends JFrame implements ActionListener {
+
+    private JLabel lblshopping, lblcategory;
+    private JButton btnhome, btncart;
+    private JPanel panel, panel2;
+    private JButton btnAppliance, btnApparel, btnFurniture, btnGadgets, btnHygiene;
+    private JButton[][] selectButtons;
+    private JButton confirmButton;
+    private String[][] items;
+
+    shopping() {
+        setTitle("Shopping");
+        setSize(800, 600);
         setLayout(null);
-        setResizable(false);
+
+        lblshopping = new JLabel("Shopping");
+        lblshopping.setFont(new Font("Arial", Font.BOLD, 24));
+        lblshopping.setBounds(340, 20, 200, 30);
+
+        lblcategory = new JLabel("Category");
+        lblcategory.setFont(new Font("Arial", Font.BOLD, 16));
+        lblcategory.setBounds(20, 70, 100, 20);
+
+        btnhome = new JButton("HOME");
+        btnhome.setBounds(650, 20, 100, 30);
+        btnhome.addActionListener(this);
+
+        btncart = new JButton("CART");
+        btncart.setBounds(650, 60, 100, 30);
+        btncart.addActionListener(this);
+
+        panel = new JPanel();
+        panel.setLayout(null);
+        panel.setBounds(20, 100, 300, 450);
+        panel.setBackground(Color.white);
+
+        panel2 = new JPanel();
+        panel2.setLayout(null);
+        panel2.setBounds(340, 100, 420, 450);
+        panel2.setBackground(Color.white);
+
+        // Category buttons
+        btnAppliance = new JButton("Appliance");
+        btnAppliance.setBounds(20, 20, 120, 30);
+        btnAppliance.addActionListener(this);
+        panel.add(btnAppliance);
+
+        btnApparel = new JButton("Apparel");
+        btnApparel.setBounds(20, 70, 120, 30);
+        btnApparel.addActionListener(this);
+        panel.add(btnApparel);
+
+        btnFurniture = new JButton("Furniture");
+        btnFurniture.setBounds(20, 120, 120, 30);
+        btnFurniture.addActionListener(this);
+        panel.add(btnFurniture);
+
+        btnGadgets = new JButton("Gadgets");
+        btnGadgets.setBounds(20, 170, 120, 30);
+        btnGadgets.addActionListener(this);
+        panel.add(btnGadgets);
+
+        btnHygiene = new JButton("Hygiene");
+        btnHygiene.setBounds(20, 220, 120, 30);
+        btnHygiene.addActionListener(this);
+        panel.add(btnHygiene);
+
+        int numCategories = 5; 
+        int itemsPerCategory = 3; 
+        selectButtons = new JButton[numCategories][itemsPerCategory];
+
+        String[] categories = {"Appliance", "Apparel", "Furniture", "Gadgets", "Hygiene"};
+        String[][] items = {
+                {"Item 1", "Item 2", "Item 3"},
+                {"Item 4", "Item 5", "Item 6"},
+                {"Item 7", "Item 8", "Item 9"},
+                {"Item 10", "Item 11", "Item 12"},
+                {"Item 13", "Item 14", "Item 15"}
+        };
+
+        // Adding select buttons for each category item
+        for (int i = 0; i < categories.length; i++) {
+            JLabel lblCat = new JLabel(categories[i]);
+            lblCat.setBounds(160, 20 + i * 90, 100, 20);
+            lblCat.setFont(new Font("Arial", Font.BOLD, 14));
+            panel.add(lblCat);
+
+            for (int j = 0; j < items[i].length; j++) {
+                JLabel lblItem = new JLabel(items[i][j]);
+                lblItem.setBounds(160, 50 + j * 30 + i * 90, 100, 20);
+                lblItem.setFont(new Font("Arial", Font.PLAIN, 14));
+                panel.add(lblItem);
+
+                JButton btnSelect = new JButton("Select");
+                btnSelect.setBounds(260, 50 + j * 30 + i * 90, 80, 20);
+                btnSelect.addActionListener(this);
+                selectButtons[i][j] = btnSelect;
+                panel.add(btnSelect);
+            }
+        }
+
+        confirmButton = new JButton("Confirm");
+        confirmButton.setBounds(150, 20, 100, 30);
+        confirmButton.addActionListener(this);
+        panel2.add(confirmButton);
+
+        add(lblshopping);
+        add(lblcategory);
+        add(btnhome);
+        add(btncart);
+        add(panel);
+        add(panel2);
+
         setVisible(true);
+        setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
-    
+
     @Override
-    public void actionPerformed (ActionEvent e){
-        
-        dispose();
-        if(e.getSource() == btnPayment){
-            OSPPayment payment = new OSPPayment();
-            payment.setVisible(true);
-            
-        }else if (e.getSource() == btnCart) {
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == btnhome) {
+            dispose();
+            shopping menu = new shopping();
+            menu.setVisible(true);
+        } else if (e.getSource() == btncart) {
+            dispose();
             OSPCart cart = new OSPCart();
             cart.setVisible(true);
-        }
-        else if(e.getSource() == btnapparel){
-            OSPCategory categ = new OSPCategory();
-            categ.setVisible(true);      
-        }
-        else if(e.getSource() == btnappliances){
-            OSPCateg2 appliance = new OSPCateg2();
-            appliance.setVisible(true);
-        }
-        else if(e.getSource() == btnfurniture){
-            OSPCateg3 furnitures = new OSPCateg3();
-            furnitures.setVisible(true);                    
-        }
-        else if(e.getSource() == btngadgets){
-            OSPCateg4 gadgets = new OSPCateg4();
-            gadgets.setVisible(true);    
-        }
-        else if(e.getSource() == btnhygiene){
-            OSPCateg5 hygiene = new OSPCateg5();
-            hygiene.setVisible(true);
+        } else if (e.getSource() == confirmButton) {
+            OSPCart cart = new OSPCart();
+            cart.setVisible(true);
+            dispose();
+        } else if (e.getSource() == btnAppliance) {
+            dispose();
+            OSPCateg2 categoryAppliance = new OSPCateg2();
+            categoryAppliance.setVisible(true);
+        } else if (e.getSource() == btnApparel) {
+            dispose();
+            OSPCategory categoryApparel = new OSPCategory();
+            categoryApparel.setVisible(true);
+        } else if (e.getSource() == btnFurniture) {
+            dispose();
+            OSPCateg3 categoryFurniture = new OSPCateg3();
+            categoryFurniture.setVisible(true);
+        } else if (e.getSource() == btnGadgets) {
+            dispose();
+            OSPCateg4 categoryGadgets = new OSPCateg4();
+            categoryGadgets.setVisible(true);
+        } else if (e.getSource() == btnHygiene) {
+            dispose();
+            OSPCateg5 categoryHygiene = new OSPCateg5();
+            categoryHygiene.setVisible(true);
+        } else {
+            for (int i = 0; i < selectButtons.length; i++) {
+                for (int j = 0; j < selectButtons[i].length; j++) {
+                    if (e.getSource() == selectButtons[i][j]) {
+                        System.out.println("Selected item: " + items[i][j]);
+                    }
+                }
+            }
         }
     }
-   
-    public static void main(String[]args){
+
+    public static void main(String[] args) {
         new shopping();
     }
-   
 }
