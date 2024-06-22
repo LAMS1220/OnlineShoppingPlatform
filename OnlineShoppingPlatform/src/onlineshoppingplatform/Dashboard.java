@@ -3,46 +3,53 @@ package onlineshoppingplatform;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.*;
 
-public class Dashboard extends JFrame {
+public class Dashboard extends JFrame implements ActionListener {
     private JTable itemTable;
     private DefaultTableModel tableModel;
+    private JButton btnAdd, btnDelete;
+    private Connection connection;
 
     public Dashboard() {
-        setTitle("Administrator Dashboard");
-        setSize(800, 400);
+        setTitle("ADMINISTRATIVE DASHBOARD");
+        setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
-        // Initialize table with headers and no data initially
-        String[] columnNames = {"Item Name", "Item Price", "Customer Name", "Customer Address", "Customer Phone", "Payment Status"};
-        tableModel = new DefaultTableModel(columnNames, 0); // 0 rows initially
+        btnAdd = new JButton("UPDATE");
+        btnDelete = new JButton("DELETE");
 
+        String[] columnNames = {"Item Name", "Item Price", "Customer Name", "Customer Address", "Customer Phone", "Payment Status"};
+        tableModel = new DefaultTableModel(columnNames, 0); 
         itemTable = new JTable(tableModel);
         JScrollPane scrollPane = new JScrollPane(itemTable);
         add(scrollPane, BorderLayout.CENTER);
 
-        fetchItems(); // Fetch items from database and populate the table
+        fetchItems(); 
+
+        btnAdd.addActionListener(this);
+        btnDelete.addActionListener(this);
+
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.add(btnAdd);
+        buttonPanel.add(btnDelete);
+        add(buttonPanel, BorderLayout.SOUTH);
 
         setVisible(true);
     }
 
     private void fetchItems() {
-        Connection connection = null;
-        Statement statement = null;
-        ResultSet resultSet = null;
-
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/shopping_db", "username", "password");
-            statement = connection.createStatement();
-            // Assuming 'items' and 'payments' tables and their relationship
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/osp", "root", "");
+            Statement statement = connection.createStatement();
             String query = "SELECT i.name AS itemName, i.price AS itemPrice, p.customer_name, p.customer_address, p.customer_phone, p.payment_status " +
                            "FROM items i " +
                            "JOIN payments p ON i.id = p.item_id"; // Adjust the join condition based on your actual schema
-            resultSet = statement.executeQuery(query);
+            ResultSet resultSet = statement.executeQuery(query);
 
-            // Clear existing rows before adding updated ones
             tableModel.setRowCount(0);
 
             while (resultSet.next()) {
@@ -53,27 +60,86 @@ public class Dashboard extends JFrame {
                 String customerPhone = resultSet.getString("customer_phone");
                 String paymentStatus = resultSet.getString("payment_status");
 
-                // Add each row to the table model
                 Object[] rowData = {itemName, itemPrice, customerName, customerAddress, customerPhone, paymentStatus};
                 tableModel.addRow(rowData);
             }
+            resultSet.close();
+            statement.close();
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(this, "Error fetching data from database: " + e.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
-        } finally {
-            // Close resources in the reverse order of their opening
-            try {
-                if (resultSet != null) resultSet.close();
-                if (statement != null) statement.close();
-                if (connection != null) connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
     }
 
-    // Method to refresh dashboard view when updates occur
+    private void UpdateItem() {
+        String itemName = JOptionPane.showInputDialog(this, "Enter Item Name:");
+        String itemPriceStr = JOptionPane.showInputDialog(this, "Enter Item Price:");
+        double itemPrice = Double.parseDouble(itemPriceStr);
+
+        try {
+            String insertItemQuery = "INSERT INTO items (name, price) VALUES (?, ?)";
+            PreparedStatement preparedStatement = connection.prepareStatement(insertItemQuery, Statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setString(1, itemName);
+            preparedStatement.setDouble(2, itemPrice);
+            preparedStatement.executeUpdate();
+
+            ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                int itemId = generatedKeys.getInt(1);
+
+                String customerName = JOptionPane.showInputDialog(this, "Enter Customer Name:");
+                String customerAddress = JOptionPane.showInputDialog(this, "Enter Customer Address:");
+                String customerPhone = JOptionPane.showInputDialog(this, "Enter Customer Phone:");
+                String paymentStatus = JOptionPane.showInputDialog(this, "Enter Payment Status:");
+
+                String insertPaymentQuery = "INSERT INTO payments (item_id, customer_name, customer_address, customer_phone, payment_status) VALUES (?, ?, ?, ?, ?)";
+                preparedStatement = connection.prepareStatement(insertPaymentQuery);
+                preparedStatement.setInt(1, itemId);
+                preparedStatement.setString(2, customerName);
+                preparedStatement.setString(3, customerAddress);
+                preparedStatement.setString(4, customerPhone);
+                preparedStatement.setString(5, paymentStatus);
+                preparedStatement.executeUpdate();
+            }
+
+            preparedStatement.close();
+            refreshDashboard();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Error adding item to database: " + e.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void deleteItem() {
+        int selectedRow = itemTable.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Please select an item to delete.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        String itemName = (String) tableModel.getValueAt(selectedRow, 0);
+        try {
+            String deleteItemQuery = "DELETE FROM items WHERE name = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(deleteItemQuery);
+            preparedStatement.setString(1, itemName);
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+
+            refreshDashboard();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Error deleting item from database: " + e.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
     public void refreshDashboard() {
-        fetchItems(); // Reload items from database and update the table
+        fetchItems();
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == btnAdd) {
+            UpdateItem();
+        } else if (e.getSource() == btnDelete) {
+            deleteItem();
+        }
     }
 
     public static void main(String[] args) {

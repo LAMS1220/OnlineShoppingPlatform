@@ -21,17 +21,17 @@ public class AdminLogin extends JFrame implements ActionListener {
         setTitle("Admin Login");
         setLayout(null);
 
-        lblTitle = new JLabel("Admin Login");
+        lblTitle = new JLabel("ADMIN LOGIN");
         lblTitle.setFont(new Font("Arial", Font.BOLD, 24));
-        lblTitle.setBounds(120, 30, 200, 30);
+        lblTitle.setBounds(110, 20, 250, 30);
 
         lblUsername = new JLabel("Username:");
         lblUsername.setBounds(50, 80, 100, 25);
-        lblUsername.setFont(new Font("Arial", Font.PLAIN, 15));
+        lblUsername.setFont(new Font("Arial", Font.BOLD, 15));
 
         lblPassword = new JLabel("Password:");
         lblPassword.setBounds(50, 120, 100, 25);
-        lblPassword.setFont(new Font("Arial", Font.PLAIN, 15));
+        lblPassword.setFont(new Font("Arial", Font.BOLD, 15));
 
         txtUsername = new JTextField();
         txtUsername.setBounds(150, 80, 150, 25);

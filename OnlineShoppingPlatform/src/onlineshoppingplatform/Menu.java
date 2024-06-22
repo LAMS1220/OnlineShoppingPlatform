@@ -18,9 +18,9 @@ public class Menu extends JFrame implements ActionListener {
         lblTitle = new JLabel("ONLINE SHOPPING PLATFORM");
         lblTitle.setFont(new Font("Arial", Font.BOLD, 20));
 
-        btnRegister = new JButton("Register");
-        btnLogin = new JButton("Login");
-        btncus = new JButton ("Customer");
+        btnRegister = new JButton("REGISTER");
+        btnLogin = new JButton("LOGIN");
+        btncus = new JButton ("CUSTOMER");
         
         
         add(lblTitle);

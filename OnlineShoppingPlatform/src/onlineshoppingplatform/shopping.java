@@ -20,9 +20,9 @@ public class shopping extends JFrame implements ActionListener {
         setSize(800, 600);
         setLayout(null);
 
-        lblshopping = new JLabel("Shopping");
+        lblshopping = new JLabel("ONLINE SHOPPING PLATFORM");
         lblshopping.setFont(new Font("Arial", Font.BOLD, 24));
-        lblshopping.setBounds(340, 20, 200, 30);
+        lblshopping.setBounds(20, 20, 500, 30);
 
         lblcategory = new JLabel("Category");
         lblcategory.setFont(new Font("Arial", Font.BOLD, 16));

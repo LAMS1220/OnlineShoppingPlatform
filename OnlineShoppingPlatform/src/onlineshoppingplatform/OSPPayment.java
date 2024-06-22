@@ -23,56 +23,61 @@ public class OSPPayment extends JFrame implements ActionListener {
         this.totalPrice = totalPrice;
         this.dbManager = dbManager;
 
-        setTitle("Payment");
+        setTitle("PAYMENT");
         setSize(600, 700);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(null);
 
-        lblcustomer = new JLabel("Customer's Information");
-        lblcustomer.setBounds(20, 20, 220, 20);
+        lblcustomer = new JLabel("CUSTOMER'S INFORMATION");
+        lblcustomer.setBounds(20, 20, 220, 30);
         lblcustomer.setFont(new Font("Arial", Font.BOLD, 16));
 
-        lblname = new JLabel("Name");
-        lblname.setBounds(100, 160, 100, 20);
+        lblname = new JLabel("Name:");
+        lblname.setBounds(100, 70, 100, 30);
         lblname.setFont(new Font("Arial", Font.BOLD, 15));
 
-        lbladd = new JLabel("Address");
-        lbladd.setBounds(100, 190, 100, 20);
+        lbladd = new JLabel("Address:");
+        lbladd.setBounds(100, 110, 100, 30);
         lbladd.setFont(new Font("Arial", Font.BOLD, 15));
 
-        lblcontact = new JLabel("Contact No");
-        lblcontact.setBounds(100, 220, 100, 20);
+        lblcontact = new JLabel("Contact No:");
+        lblcontact.setBounds(100, 150, 100, 30);
         lblcontact.setFont(new Font("Arial", Font.BOLD, 15));
 
-        lblamount = new JLabel("Amount");
-        lblamount.setBounds(100, 250, 100, 20);
+        lblamount = new JLabel("Amount:");
+        lblamount.setBounds(100, 190, 100, 30);
         lblamount.setFont(new Font("Arial", Font.BOLD, 15));
 
-        lblmop = new JLabel("Mode of Payment");
-        lblmop.setBounds(100, 300, 210, 20);
+        lblmop = new JLabel("Mode of Payment:");
+        lblmop.setBounds(100, 230, 150, 30);
         lblmop.setFont(new Font("Arial", Font.BOLD, 15));
 
         txtname = new JTextField();
-        txtname.setBounds(200, 160, 200, 20);
+        txtname.setBounds(250, 70, 200, 30);
         txtname.setFont(new Font("Arial", Font.PLAIN, 15));
 
         txtadd = new JTextField();
-        txtadd.setBounds(200, 190, 200, 20);
+        txtadd.setBounds(250, 110, 200, 30);
         txtadd.setFont(new Font("Arial", Font.PLAIN, 15));
 
         txtcontact = new JTextField();
-        txtcontact.setBounds(200, 220, 200, 20);
+        txtcontact.setBounds(250, 150, 200, 30);
         txtcontact.setFont(new Font("Arial", Font.PLAIN, 15));
 
         txtamount = new JTextField();
-        txtamount.setBounds(200, 250, 200, 20);
+        txtamount.setBounds(250, 190, 200, 30);
         txtamount.setFont(new Font("Arial", Font.PLAIN, 15));
 
+        String[] paymentMethods = {"Cash on Delivery","Credit Card", "Debit Card", "PayPal"};
+        cmbmop = new JComboBox<>(paymentMethods);
+        cmbmop.setBounds(250, 230, 200, 30);
+        cmbmop.setFont(new Font("Arial", Font.PLAIN, 15));
+
         panel = new JPanel();
-        panel.setBounds(20, 340, 560, 240);
+        panel.setBounds(20, 280, 560, 260);
         panel.setLayout(new BorderLayout());
 
-        lblSelectedItems = new JLabel("Selected Items:");
+        lblSelectedItems = new JLabel("ITEMS SELECTED: ");
         lblSelectedItems.setFont(new Font("Arial", Font.BOLD, 15));
         panel.add(lblSelectedItems, BorderLayout.NORTH);
 
@@ -88,16 +93,16 @@ public class OSPPayment extends JFrame implements ActionListener {
         pricePanel.add(lblTotalPrice);
         panel.add(pricePanel, BorderLayout.SOUTH);
 
-        btnPurchase = new JButton("Purchase");
-        btnPurchase.setBounds(350, 600, 100, 30);
+        btnPurchase = new JButton("CHECK OUT");
+        btnPurchase.setBounds(470, 600, 100, 30);
         btnPurchase.addActionListener(this);
 
         btnHome = new JButton("HOME");
-        btnHome.setBounds(20, 50, 70, 30);
+        btnHome.setBounds(350, 20, 100, 30);
         btnHome.addActionListener(this);
 
         btnCart = new JButton("CART");
-        btnCart.setBounds(100, 50, 70, 30);
+        btnCart.setBounds(470, 20, 100, 30);
         btnCart.addActionListener(this);
 
         add(lblcustomer);
@@ -113,6 +118,7 @@ public class OSPPayment extends JFrame implements ActionListener {
         add(txtadd);
         add(txtcontact);
         add(txtamount);
+        add(cmbmop);
         add(panel);
 
         setResizable(false);
@@ -162,6 +168,13 @@ public class OSPPayment extends JFrame implements ActionListener {
         receiptArea.setFont(new Font("Arial", Font.PLAIN, 12));
         receiptArea.setEditable(false);
         JOptionPane.showMessageDialog(this, new JScrollPane(receiptArea), "Receipt", JOptionPane.INFORMATION_MESSAGE);
-    }    
-    
+    }
+
+    public static void main(String[] args) {
+        // Example usage:
+        DBManager dbManager = new DBManager(); // Assume DBManager is implemented elsewhere
+        String selectedItems = "Item 1\nItem 2\nItem 3";
+        double totalPrice = 150.0;
+        new OSPPayment(selectedItems, totalPrice, dbManager);
+    }
 }
