@@ -4,20 +4,26 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 public class OSPPayment extends JFrame implements ActionListener {
     private JLabel lblname, lbladd, lblcontact, lblcustomer, lblmop, lblamount, lblSelectedItems, lblTotalPrice;
-    private JButton btnPurchase, btnHome;
+    private JButton btnPurchase, btnHome, btnDelete;
     private JTextField txtname, txtadd, txtcontact, txtamount;
     private JComboBox<String> cmbmop;
     private JPanel customerPanel, itemsPanel, buttonPanel;
     private JScrollPane scrollPane;
     private double totalPrice;
     private DBManager dbManager;
-    private String selectedItems;
+    private List<String> selectedItems;
+    private JTextArea selectedItemsArea;
 
     public OSPPayment(String selectedItems, double totalPrice, DBManager dbManager) {
-        this.selectedItems = selectedItems;
+        this.selectedItems = new ArrayList<>();
+        for (String item : selectedItems.split("\n")) {
+            this.selectedItems.add(item);
+        }
         this.totalPrice = totalPrice;
         this.dbManager = dbManager;
 
@@ -96,7 +102,8 @@ public class OSPPayment extends JFrame implements ActionListener {
         lblSelectedItems.setFont(new Font("Arial", Font.BOLD, 15));
         itemsPanel.add(lblSelectedItems, BorderLayout.NORTH);
 
-        JTextArea selectedItemsArea = new JTextArea(selectedItems);
+        selectedItemsArea = new JTextArea();
+        updateSelectedItemsArea();
         selectedItemsArea.setFont(new Font("Arial", Font.PLAIN, 15));
         selectedItemsArea.setEditable(false);
         itemsPanel.add(new JScrollPane(selectedItemsArea), BorderLayout.CENTER);
@@ -123,6 +130,11 @@ public class OSPPayment extends JFrame implements ActionListener {
         btnHome.addActionListener(this);
         buttonPanel.add(btnHome);
 
+        btnDelete = new JButton("DELETE");
+        btnDelete.setBounds(230, 10, 100, 30);
+        btnDelete.addActionListener(this);
+        buttonPanel.add(btnDelete);
+
         add(customerPanel, BorderLayout.NORTH);
         add(itemsPanel, BorderLayout.CENTER);
         add(buttonPanel, BorderLayout.SOUTH);
@@ -130,6 +142,10 @@ public class OSPPayment extends JFrame implements ActionListener {
         setResizable(false);
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
+    private void updateSelectedItemsArea() {
+        selectedItemsArea.setText(String.join("\n", selectedItems));
     }
 
     @Override
@@ -149,8 +165,39 @@ public class OSPPayment extends JFrame implements ActionListener {
                 JOptionPane.showMessageDialog(this, "Please enter a valid amount.", "Error", JOptionPane.ERROR_MESSAGE);
             }
         } else if (e.getSource() == btnHome) {
-            new Home();
+            new Home(String.join("\n", selectedItems), totalPrice);
             dispose();
+        } else if (e.getSource() == btnDelete) {
+            deleteSelectedItem();
+        }
+    }
+
+    private void deleteSelectedItem() {
+        String selectedItem = JOptionPane.showInputDialog(this, "Enter the item to delete:");
+        if (selectedItem != null && !selectedItem.trim().isEmpty()) {
+            boolean removed = selectedItems.removeIf(item -> item.equalsIgnoreCase(selectedItem.trim()));
+            if (removed) {
+                recalculateTotalPrice();
+                updateSelectedItemsArea();
+                lblTotalPrice.setText("Total Price: $" + totalPrice);
+                JOptionPane.showMessageDialog(this, "Item removed successfully.");
+            } else {
+                JOptionPane.showMessageDialog(this, "Item not found.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
+    private void recalculateTotalPrice() {
+        totalPrice = 0.0;
+        for (String item : selectedItems) {
+            String[] itemDetails = item.split(","); // assuming items are in format "ItemName,Price"
+            if (itemDetails.length == 2) {
+                try {
+                    totalPrice += Double.parseDouble(itemDetails[1].trim());
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -162,7 +209,9 @@ public class OSPPayment extends JFrame implements ActionListener {
         receipt.append("Contact No: ").append(txtcontact.getText()).append("\n\n");
         receipt.append("Selected Items:\n");
 
-        receipt.append(selectedItems).append("\n");
+        for (String item : selectedItems) {
+            receipt.append(item).append("\n");
+        }
 
         receipt.append("\nTotal Price: $").append(totalPrice).append("\n");
         receipt.append("Amount Tendered: $").append(txtamount.getText()).append("\n");
@@ -177,7 +226,7 @@ public class OSPPayment extends JFrame implements ActionListener {
     public static void main(String[] args) {
         // Example usage:
         DBManager dbManager = new DBManager(); // Assume DBManager is implemented elsewhere
-        String selectedItems = "Item 1\nItem 2\nItem 3";
+        String selectedItems = "Item 1,50\nItem 2,30\nItem 3,70";
         double totalPrice = 150.0;
         new OSPPayment(selectedItems, totalPrice, dbManager);
     }
