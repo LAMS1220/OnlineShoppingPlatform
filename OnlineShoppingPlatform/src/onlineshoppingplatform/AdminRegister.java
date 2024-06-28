@@ -1,12 +1,12 @@
-package onlineshoppingplatform;
+package onlineshopp;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
 
 public class AdminRegister extends JFrame implements ActionListener {
+
     private JLabel lblUsername, lblPassword, lblTitle;
     private JTextField txtfldUsername;
     private JPasswordField txtfldPassword;
@@ -15,7 +15,7 @@ public class AdminRegister extends JFrame implements ActionListener {
 
     public AdminRegister() {
         db = new DBManager();
-        
+
         setTitle("Admin Registration");
         setSize(400, 300);
         setLayout(null);
@@ -66,14 +66,10 @@ public class AdminRegister extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == btnRegister) {
-            try {
-                db.registerAdmin(txtfldUsername.getText(), new String(txtfldPassword.getPassword()));
-                JOptionPane.showMessageDialog(this, "Admin registered successfully!");
-                dispose();
-                new Dashboard().setVisible(true);
-            } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(this, "Failed to register admin: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            }
+            db.registerAdmin(txtfldUsername.getText(), new String(txtfldPassword.getPassword()));
+            JOptionPane.showMessageDialog(this, "Admin registered successfully!");
+            dispose();
+            new Dashboard().setVisible(true);
         } else if (e.getSource() == btnBack) {
             this.dispose();
             new Menu().setVisible(true);
