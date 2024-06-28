@@ -1,4 +1,4 @@
-package onlineshoppingplatform;
+package onlineshopp;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -12,6 +12,9 @@ public class Dashboard extends JFrame implements ActionListener {
     private DefaultTableModel tableModel;
     private JButton btnAdd, btnDelete;
     private Connection connection;
+    private static final String URL = "jdbc:mysql://localhost:3306/osp";
+    private static final String USER = "lance";
+    private static final String PASSWORD = "12345";
 
     public Dashboard() {
         setTitle("ADMINISTRATIVE DASHBOARD");
@@ -23,12 +26,14 @@ public class Dashboard extends JFrame implements ActionListener {
         btnDelete = new JButton("DELETE");
 
         String[] columnNames = {"Item Name", "Item Price", "Customer Name", "Customer Address", "Customer Phone", "Payment Status"};
-        tableModel = new DefaultTableModel(columnNames, 0); 
+        tableModel = new DefaultTableModel(columnNames, 0);
         itemTable = new JTable(tableModel);
         JScrollPane scrollPane = new JScrollPane(itemTable);
         add(scrollPane, BorderLayout.CENTER);
 
-        fetchItems(); 
+        // Initialize database connection
+        initializeDBConnection();
+        fetchItems();
 
         btnAdd.addActionListener(this);
         btnDelete.addActionListener(this);
@@ -41,13 +46,23 @@ public class Dashboard extends JFrame implements ActionListener {
         setVisible(true);
     }
 
+    private void initializeDBConnection() {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            connection = DriverManager.getConnection(URL, USER, PASSWORD);
+            System.out.println("Connected to MySQL database!");
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error connecting to database: " + e.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
     private void fetchItems() {
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/osp", "root", "");
             Statement statement = connection.createStatement();
             String query = "SELECT i.name AS itemName, i.price AS itemPrice, p.customer_name, p.customer_address, p.customer_phone, p.payment_status " +
                            "FROM items i " +
-                           "JOIN payments p ON i.id = p.item_id"; // Adjust the join condition based on your actual schema
+                           "JOIN payments p ON i.id = p.item_id";
             ResultSet resultSet = statement.executeQuery(query);
 
             tableModel.setRowCount(0);
