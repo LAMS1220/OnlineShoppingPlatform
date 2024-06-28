@@ -1,4 +1,4 @@
-package onlineshoppingplatform;
+package onlineshopp;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,17 +8,17 @@ import java.sql.SQLException;
 
 public class OSPPayment extends JFrame implements ActionListener {
     private JLabel lblname, lbladd, lblcontact, lblcustomer, lblmop, lblamount, lblSelectedItems, lblTotalPrice;
-    private JButton btnPurchase, btnHome, btnCart;
+    private JButton btnPurchase, btnHome;
     private JTextField txtname, txtadd, txtcontact, txtamount;
     private JComboBox<String> cmbmop;
     private JPanel panel;
     private JScrollPane scrollPane;
     private DefaultListModel<String> listModel;
-    private double totalPrice = 0.0;
+    private double totalPrice;
     private DBManager dbManager;
     private String selectedItems;
 
-    OSPPayment(String selectedItems, double totalPrice, DBManager dbManager) {
+    public OSPPayment(String selectedItems, double totalPrice, DBManager dbManager) {
         this.selectedItems = selectedItems;
         this.totalPrice = totalPrice;
         this.dbManager = dbManager;
@@ -29,7 +29,7 @@ public class OSPPayment extends JFrame implements ActionListener {
         setLayout(null);
 
         lblcustomer = new JLabel("CUSTOMER'S INFORMATION");
-        lblcustomer.setBounds(20, 20, 220, 30);
+        lblcustomer.setBounds(20, 20, 250, 30);
         lblcustomer.setFont(new Font("Arial", Font.BOLD, 16));
 
         lblname = new JLabel("Name:");
@@ -68,7 +68,7 @@ public class OSPPayment extends JFrame implements ActionListener {
         txtamount.setBounds(250, 190, 200, 30);
         txtamount.setFont(new Font("Arial", Font.PLAIN, 15));
 
-        String[] paymentMethods = {"Cash on Delivery","Credit Card", "Debit Card", "PayPal"};
+        String[] paymentMethods = {"Cash on Delivery", "Credit Card", "Debit Card", "PayPal"};
         cmbmop = new JComboBox<>(paymentMethods);
         cmbmop.setBounds(250, 230, 200, 30);
         cmbmop.setFont(new Font("Arial", Font.PLAIN, 15));
@@ -101,9 +101,6 @@ public class OSPPayment extends JFrame implements ActionListener {
         btnHome.setBounds(350, 20, 100, 30);
         btnHome.addActionListener(this);
 
-        btnCart = new JButton("CART");
-        btnCart.setBounds(470, 20, 100, 30);
-        btnCart.addActionListener(this);
 
         add(lblcustomer);
         add(lblname);
@@ -113,7 +110,6 @@ public class OSPPayment extends JFrame implements ActionListener {
         add(lblmop);
         add(btnPurchase);
         add(btnHome);
-        add(btnCart);
         add(txtname);
         add(txtadd);
         add(txtcontact);
@@ -134,18 +130,11 @@ public class OSPPayment extends JFrame implements ActionListener {
             double amount = Double.parseDouble(txtamount.getText());
             String paymentMethod = (String) cmbmop.getSelectedItem();
 
-            try {
-                dbManager.addPayment(name, address, contact, amount, paymentMethod);
-                generateReceipt();
-                JOptionPane.showMessageDialog(this, "Payment processed successfully! Receipt generated.");
-            } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(this, "Error processing payment: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            }
+            dbManager.addPayment(name, address, contact, amount, paymentMethod);
+            generateReceipt();
+            JOptionPane.showMessageDialog(this, "Payment processed successfully! Receipt generated.");
         } else if (e.getSource() == btnHome) {
-            new shopping();
-            dispose();
-        } else if (e.getSource() == btnCart) {
-            new OSPCart();
+            new Home();
             dispose();
         }
     }
