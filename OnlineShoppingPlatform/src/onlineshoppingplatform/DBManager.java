@@ -1,45 +1,35 @@
-package onlineshoppingplatform;
+package onlineshopp;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 public class DBManager {
     private Connection conn;
-    private static final String URL = "jdbc:mysql://localhost:3306/shopping_db";
-    private static final String USER = "username"; 
-    private static final String PASSWORD = "password"; 
+    private static final String URL = "jdbc:mysql://localhost:3306/osp";
+    private static final String USER = "lance";
+    private static final String PASSWORD = "12345";
 
     public DBManager() {
         try {
-            // Load the JDBC driver
+            // Load the JDBC driver (optional for newer versions)
             Class.forName("com.mysql.cj.jdbc.Driver");
             conn = DriverManager.getConnection(URL, USER, PASSWORD);
+            System.out.println("Connected to MySQL database!");
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public Connection getConnection() {
-        return conn;
-    }
-
-    public void registerAdmin(String username, String password) throws SQLException {
-        String sql = "INSERT INTO admins(username, password) VALUES(?, ?)";
-
-        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, username);
-            pstmt.setString(2, password);
-            pstmt.executeUpdate();
-        }
-    }
-
-    public boolean loginAdmin(String username, String password) throws SQLException {
-        String sql = "SELECT * FROM admins WHERE username = ? AND password = ?";
-
-        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, username);
-            pstmt.setString(2, password);
-            ResultSet rs = pstmt.executeQuery();
-            return rs.next();
+    public void closeConnection() {
+        if (conn != null) {
+            try {
+                conn.close();
+                System.out.println("Disconnected from MySQL database.");
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -50,51 +40,26 @@ public class DBManager {
             statement.setString(2, description);
             statement.setDouble(3, price);
             statement.executeUpdate();
+            System.out.println("Item added to cart: " + name);
         }
     }
 
-    public void updateCartItem(int itemId, int quantity) throws SQLException {
-        String sql = "UPDATE cart SET quantity = ? WHERE item_id = ?";
+    // Other methods for database operations as needed
 
-        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setInt(1, quantity);
-            pstmt.setInt(2, itemId);
-            pstmt.executeUpdate();
-        }
+    public static void main(String[] args) {
+        DBManager dbManager = new DBManager();
+        dbManager.closeConnection();
     }
 
-    public void deleteCartItem(int itemId) throws SQLException {
-        String sql = "DELETE FROM cart WHERE item_id = ?";
-
-        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setInt(1, itemId);
-            pstmt.executeUpdate();
-        }
+    void addPayment(String name, String address, String contact, double amount, String paymentMethod) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public ResultSet getCartItems() throws SQLException {
-        String sql = "SELECT * FROM cart";
-
-        Statement stmt = conn.createStatement();
-        return stmt.executeQuery(sql);
+    void registerAdmin(String text, String string) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public void addPayment(String name, String address, String contact, double amount, String paymentMethod) throws SQLException {
-        String query = "INSERT INTO payments (name, address, contact, amount, payment_method) VALUES (?, ?, ?, ?, ?)";
-        try (PreparedStatement statement = conn.prepareStatement(query)) {
-            statement.setString(1, name);
-            statement.setString(2, address);
-            statement.setString(3, contact);
-            statement.setDouble(4, amount);
-            statement.setString(5, paymentMethod);
-            statement.executeUpdate();
-        }
-    }
-
-    public ResultSet getAllItems() throws SQLException {
-        String sql = "SELECT * FROM items";
-
-        Statement stmt = conn.createStatement();
-        return stmt.executeQuery(sql);
+    boolean loginAdmin(String username, String password) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
