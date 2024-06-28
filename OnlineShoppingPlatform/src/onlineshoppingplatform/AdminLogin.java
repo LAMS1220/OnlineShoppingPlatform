@@ -1,4 +1,4 @@
-package onlineshoppingplatform;
+package onlineshopp;
 
 
 
@@ -6,7 +6,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
 
 public class AdminLogin extends JFrame implements ActionListener {
     private JLabel lblTitle, lblUsername, lblPassword;
@@ -71,17 +70,12 @@ public class AdminLogin extends JFrame implements ActionListener {
             String username = txtUsername.getText();
             String password = new String(txtPassword.getPassword());
 
-            try {
-                if (db.loginAdmin(username, password)) {
-                    JOptionPane.showMessageDialog(this, "Login successful", "Success", JOptionPane.INFORMATION_MESSAGE);
-                    dispose();
-                    new Dashboard().setVisible(true);
-                } else {
-                    JOptionPane.showMessageDialog(this, "Invalid credentials", "Error", JOptionPane.ERROR_MESSAGE);
-                }
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-                JOptionPane.showMessageDialog(this, "Login failed", "Error", JOptionPane.ERROR_MESSAGE);
+            if (!db.loginAdmin(username, password)) {
+                JOptionPane.showMessageDialog(this, "Invalid credentials", "Error", JOptionPane.ERROR_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Login successful", "Success", JOptionPane.INFORMATION_MESSAGE);
+                dispose();
+                new Dashboard().setVisible(true);
             }
         } else if (e.getSource() == btnBack) {
             dispose();
