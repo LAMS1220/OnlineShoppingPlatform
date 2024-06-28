@@ -1,4 +1,4 @@
-package onlineshoppingplatform;
+package onlineshopp;
 
 import java.awt.EventQueue;
 import java.awt.Font;
@@ -57,8 +57,8 @@ public class Menu extends JFrame implements ActionListener {
         }
         else if (e.getSource() == btncus) {
             JOptionPane.showMessageDialog(this, "Welcome Customer!", "SHOPPING", JOptionPane.INFORMATION_MESSAGE);
-            shopping shop = new shopping();
-            shop.setVisible(true);
+            Home home = new Home();
+            home.setVisible(true);
             dispose();
         }
     }
