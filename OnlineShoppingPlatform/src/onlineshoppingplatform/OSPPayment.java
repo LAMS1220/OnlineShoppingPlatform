@@ -1,19 +1,17 @@
-package onlineshopp;
+package onlineshoppingplatform;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
 
 public class OSPPayment extends JFrame implements ActionListener {
     private JLabel lblname, lbladd, lblcontact, lblcustomer, lblmop, lblamount, lblSelectedItems, lblTotalPrice;
     private JButton btnPurchase, btnHome;
     private JTextField txtname, txtadd, txtcontact, txtamount;
     private JComboBox<String> cmbmop;
-    private JPanel panel;
+    private JPanel customerPanel, itemsPanel, buttonPanel;
     private JScrollPane scrollPane;
-    private DefaultListModel<String> listModel;
     private double totalPrice;
     private DBManager dbManager;
     private String selectedItems;
@@ -25,8 +23,12 @@ public class OSPPayment extends JFrame implements ActionListener {
 
         setTitle("PAYMENT");
         setSize(600, 700);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(null);
+        setLayout(new BorderLayout());
+
+        // Customer information panel
+        customerPanel = new JPanel();
+        customerPanel.setLayout(null);
+        customerPanel.setPreferredSize(new Dimension(600, 300));
 
         lblcustomer = new JLabel("CUSTOMER'S INFORMATION");
         lblcustomer.setBounds(20, 20, 250, 30);
@@ -73,66 +75,79 @@ public class OSPPayment extends JFrame implements ActionListener {
         cmbmop.setBounds(250, 230, 200, 30);
         cmbmop.setFont(new Font("Arial", Font.PLAIN, 15));
 
-        panel = new JPanel();
-        panel.setBounds(20, 280, 560, 260);
-        panel.setLayout(new BorderLayout());
+        customerPanel.add(lblcustomer);
+        customerPanel.add(lblname);
+        customerPanel.add(lbladd);
+        customerPanel.add(lblcontact);
+        customerPanel.add(lblamount);
+        customerPanel.add(lblmop);
+        customerPanel.add(txtname);
+        customerPanel.add(txtadd);
+        customerPanel.add(txtcontact);
+        customerPanel.add(txtamount);
+        customerPanel.add(cmbmop);
+
+        // Items and price panel
+        itemsPanel = new JPanel();
+        itemsPanel.setLayout(new BorderLayout());
+        itemsPanel.setPreferredSize(new Dimension(600, 150));
 
         lblSelectedItems = new JLabel("ITEMS SELECTED: ");
         lblSelectedItems.setFont(new Font("Arial", Font.BOLD, 15));
-        panel.add(lblSelectedItems, BorderLayout.NORTH);
+        itemsPanel.add(lblSelectedItems, BorderLayout.NORTH);
 
         JTextArea selectedItemsArea = new JTextArea(selectedItems);
         selectedItemsArea.setFont(new Font("Arial", Font.PLAIN, 15));
         selectedItemsArea.setEditable(false);
-        panel.add(new JScrollPane(selectedItemsArea), BorderLayout.CENTER);
+        itemsPanel.add(new JScrollPane(selectedItemsArea), BorderLayout.CENTER);
 
         JPanel pricePanel = new JPanel();
         pricePanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
         lblTotalPrice = new JLabel("Total Price: $" + totalPrice);
         lblTotalPrice.setFont(new Font("Arial", Font.BOLD, 15));
         pricePanel.add(lblTotalPrice);
-        panel.add(pricePanel, BorderLayout.SOUTH);
+        itemsPanel.add(pricePanel, BorderLayout.SOUTH);
+
+        // Button panel
+        buttonPanel = new JPanel();
+        buttonPanel.setLayout(null);
+        buttonPanel.setPreferredSize(new Dimension(600, 50));
 
         btnPurchase = new JButton("CHECK OUT");
-        btnPurchase.setBounds(470, 600, 100, 30);
+        btnPurchase.setBounds(450, 10, 120, 30);
         btnPurchase.addActionListener(this);
+        buttonPanel.add(btnPurchase);
 
         btnHome = new JButton("HOME");
-        btnHome.setBounds(350, 20, 100, 30);
+        btnHome.setBounds(10, 10, 100, 30);
         btnHome.addActionListener(this);
+        buttonPanel.add(btnHome);
 
-
-        add(lblcustomer);
-        add(lblname);
-        add(lbladd);
-        add(lblcontact);
-        add(lblamount);
-        add(lblmop);
-        add(btnPurchase);
-        add(btnHome);
-        add(txtname);
-        add(txtadd);
-        add(txtcontact);
-        add(txtamount);
-        add(cmbmop);
-        add(panel);
+        add(customerPanel, BorderLayout.NORTH);
+        add(itemsPanel, BorderLayout.CENTER);
+        add(buttonPanel, BorderLayout.SOUTH);
 
         setResizable(false);
         setVisible(true);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == btnPurchase) {
-            String name = txtname.getText();
-            String address = txtadd.getText();
-            String contact = txtcontact.getText();
-            double amount = Double.parseDouble(txtamount.getText());
-            String paymentMethod = (String) cmbmop.getSelectedItem();
+            try {
+                String name = txtname.getText();
+                String address = txtadd.getText();
+                String contact = txtcontact.getText();
+                double amount = Double.parseDouble(txtamount.getText());
+                String paymentMethod = (String) cmbmop.getSelectedItem();
 
-            dbManager.addPayment(name, address, contact, amount, paymentMethod);
-            generateReceipt();
-            JOptionPane.showMessageDialog(this, "Payment processed successfully! Receipt generated.");
+                dbManager.addPayment(name, address, contact, amount, paymentMethod);
+                generateReceipt();
+                JOptionPane.showMessageDialog(this, "Order completed successfully! Receipt generated.");
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this, "Please enter a valid amount.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
         } else if (e.getSource() == btnHome) {
             new Home();
             dispose();
