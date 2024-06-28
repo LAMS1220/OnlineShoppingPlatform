@@ -1,0 +1,202 @@
+package onlineshopp;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Home extends JFrame implements ActionListener {
+
+    private JButton btnPayment;
+    private List<ItemPanel> itemPanels;
+    private Connection conn;
+    private JTextArea textArea;
+    private JButton btnDelete;
+    private List<Item> cart;
+    private double totalPrice;
+
+    private static final String URL = "jdbc:mysql://localhost:3306/osp";
+    private static final String USER = "lance";
+    private static final String PASSWORD = "12345";
+
+    public Home() {
+        setTitle("Online Shopping System");
+        setSize(1000, 800);
+
+        btnPayment = new JButton("PAYMENT");
+        btnPayment.setPreferredSize(new Dimension(150, 30));
+        btnPayment.addActionListener(this);
+
+        JPanel topPanel = new JPanel();
+        topPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
+        topPanel.add(btnPayment);
+        add(topPanel, BorderLayout.NORTH);
+
+        itemPanels = new ArrayList<>();
+        cart = new ArrayList<>();
+        totalPrice = 0.0;
+
+        establishConnection();
+
+        JPanel leftPanel = new JPanel();
+        leftPanel.setLayout(new GridLayout(0, 1));
+
+        addItem(leftPanel, "Sofa", 800);
+        addItem(leftPanel, "Chairs", 75);
+        addItem(leftPanel, "Tables", 200);
+        addItem(leftPanel, "Lamps", 100);
+        addItem(leftPanel, "Beds", 300);
+
+        add(leftPanel, BorderLayout.CENTER);
+
+        JPanel rightPanel = new JPanel();
+        rightPanel.setLayout(new BorderLayout());
+
+        textArea = new JTextArea();
+        textArea.setPreferredSize(new Dimension(200, 700));
+        rightPanel.add(new JScrollPane(textArea), BorderLayout.CENTER);
+        textArea.setEditable(false);
+
+        btnDelete = new JButton("Delete");
+        btnDelete.addActionListener(this);
+        rightPanel.add(btnDelete, BorderLayout.SOUTH);
+
+        add(rightPanel, BorderLayout.EAST);
+
+        setVisible(true);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(new BorderLayout());
+    }
+
+    private void establishConnection() {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            conn = DriverManager.getConnection(URL, USER, PASSWORD);
+            System.out.println("Database connection successful");
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+            System.out.println("Database connection failed");
+        }
+    }
+
+    private void addItem(JPanel panel, String itemName, double itemPrice) {
+        ItemPanel itemPanel = new ItemPanel(itemName, itemPrice, textArea);
+        itemPanels.add(itemPanel);
+        panel.add(itemPanel);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == btnDelete) {
+            textArea.setText("");
+            cart.clear();
+            totalPrice = 0.0;
+        } else if (e.getSource() == btnPayment) {
+            new OSPPayment(getCartItems(), totalPrice, new DBManager());
+            dispose();
+        }
+    }
+
+    private String getCartItems() {
+        StringBuilder items = new StringBuilder();
+        for (Item item : cart) {
+            items.append(item.getName()).append(" - $").append(item.getPrice()).append("\n");
+        }
+        return items.toString();
+    }
+
+    private class ItemPanel extends JPanel implements ActionListener {
+
+        private JLabel lblItemName;
+        private JLabel lblItemPrice;
+        private JButton btnAddToCart;
+        private JTextArea textArea;
+
+        public ItemPanel(String itemName, double itemPrice, JTextArea textArea) {
+            this.textArea = textArea;
+
+            setLayout(new FlowLayout(FlowLayout.LEFT));
+
+            lblItemName = new JLabel(itemName);
+            lblItemPrice = new JLabel("$" + itemPrice);
+            btnAddToCart = new JButton("Add to Cart");
+
+            btnAddToCart.addActionListener(this);
+
+            add(lblItemName);
+            add(lblItemPrice);
+            add(btnAddToCart);
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if (e.getSource() == btnAddToCart) {
+                addItemToCart(lblItemName.getText(), Double.parseDouble(lblItemPrice.getText().substring(1)));
+                updateCartDisplay();
+            }
+        }
+
+        private void addItemToCart(String itemName, double itemPrice) {
+            cart.add(new Item(itemName, itemPrice));
+            totalPrice += itemPrice;
+
+            try {
+                String insertItemQuery = "INSERT INTO items (name, price) VALUES (?, ?)";
+                PreparedStatement preparedStatement = conn.prepareStatement(insertItemQuery, Statement.RETURN_GENERATED_KEYS);
+                preparedStatement.setString(1, itemName);
+                preparedStatement.setDouble(2, itemPrice);
+                preparedStatement.executeUpdate();
+
+                ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    int itemId = generatedKeys.getInt(1);
+                    String insertPaymentQuery = "INSERT INTO payments (item_id, customer_name, customer_address, customer_phone, payment_status) VALUES (?, ?, ?, ?, ?)";
+                    preparedStatement = conn.prepareStatement(insertPaymentQuery);
+                    preparedStatement.setInt(1, itemId);
+                    preparedStatement.setString(2, "Customer Name");
+                    preparedStatement.setString(3, "Customer Address");
+                    preparedStatement.setString(4, "Customer Phone");
+                    preparedStatement.setString(5, "Pending");
+                    preparedStatement.executeUpdate();
+                }
+                preparedStatement.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+
+        private void updateCartDisplay() {
+            StringBuilder cartDisplay = new StringBuilder("Items in Cart:\n");
+            for (Item item : cart) {
+                cartDisplay.append(item.getName()).append(" - $").append(item.getPrice()).append("\n");
+            }
+            cartDisplay.append("\nTotal Price: $").append(totalPrice);
+            textArea.setText(cartDisplay.toString());
+        }
+    }
+
+    public static void main(String[] args) {
+        new Home();
+    }
+
+    private class Item {
+        private String name;
+        private double price;
+
+        public Item(String name, double price) {
+            this.name = name;
+            this.price = price;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public double getPrice() {
+            return price;
+        }
+    }
+}
