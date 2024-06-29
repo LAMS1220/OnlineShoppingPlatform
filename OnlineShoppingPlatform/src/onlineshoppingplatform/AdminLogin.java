@@ -1,21 +1,20 @@
-package onlineshopp;
-
-
+package onlineshoppingplatform;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.*;
 
 public class AdminLogin extends JFrame implements ActionListener {
     private JLabel lblTitle, lblUsername, lblPassword;
     private JTextField txtUsername;
     private JPasswordField txtPassword;
     private JButton btnLogin, btnBack;
-    private DBManager db;
+    private Connection conn;
 
     public AdminLogin() {
-        db = new DBManager();
+        initializeDBConnection();
 
         setTitle("Admin Login");
         setLayout(null);
@@ -64,13 +63,27 @@ public class AdminLogin extends JFrame implements ActionListener {
         setResizable(false);
     }
 
+    private void initializeDBConnection() {
+        try {
+            String URL = "jdbc:mysql://localhost:3306/osp";
+            String USER = "lance";
+            String PASSWORD = "12345";
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            conn = DriverManager.getConnection(URL, USER, PASSWORD);
+            System.out.println("Database connection successful");
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+            System.out.println("Database connection failed");
+        }
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == btnLogin) {
             String username = txtUsername.getText();
             String password = new String(txtPassword.getPassword());
 
-            if (!db.loginAdmin(username, password)) {
+            if (!loginAdmin(username, password)) {
                 JOptionPane.showMessageDialog(this, "Invalid credentials", "Error", JOptionPane.ERROR_MESSAGE);
             } else {
                 JOptionPane.showMessageDialog(this, "Login successful", "Success", JOptionPane.INFORMATION_MESSAGE);
@@ -81,6 +94,19 @@ public class AdminLogin extends JFrame implements ActionListener {
             dispose();
             new Menu().setVisible(true);
         }
+    }
+
+    private boolean loginAdmin(String username, String password) {
+        try (PreparedStatement stmt = conn.prepareStatement("SELECT * FROM admins WHERE username = ? AND password = ?")) {
+            stmt.setString(1, username);
+            stmt.setString(2, password);
+            try (ResultSet rs = stmt.executeQuery()) {
+                return rs.next();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     public static void main(String[] args) {
