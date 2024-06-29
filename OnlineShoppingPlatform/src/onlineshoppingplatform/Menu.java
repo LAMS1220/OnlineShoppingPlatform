@@ -1,4 +1,4 @@
-package onlineshopp;
+package onlineshoppingplatform;
 
 import java.awt.EventQueue;
 import java.awt.Font;
