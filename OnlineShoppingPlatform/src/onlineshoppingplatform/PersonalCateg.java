@@ -1,179 +1,201 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package onlineshoppingplatform;
 
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
-/**
- *
- * @author noctafly
- */
-public class PersonalCateg extends JFrame implements ActionListener{
-    private JButton homecat, personalcat, workcat, home, cart1, cart2, cart3, cart;  
-    private JLabel categ, name1, name2, name3, price1, price2, price3,item1, item2, item3, desc1, desc2, desc3;
-    private JPanel panel;
-    
-    PersonalCateg() {
-    
-    JFrame Personal = new JFrame("PERSONAL ITEMS CATEGORY");
-     
-    Personal.setSize(600, 435);
+public class PersonalCateg extends JFrame implements ActionListener {
+    private JButton btnHome,  btnPersonal, btnWork, btnPayment;
+    private JLabel lbltitle;
+    private List<ItemPanel> pnlItems;
+    private Connection conn;
+    private List<Item> lstItems;
+    private double totalPrice;
+
+    private static final String URL = "jdbc:mysql://localhost:3306/osp";
+    private static final String USER = "lance";
+    private static final String PASSWORD = "12345";
+
+    public PersonalCateg() {
+        setTitle("PERSONAL ITEMS CATEGORY");
+        setSize(800, 600);
+        setResizable(false);
+        setLayout(null);
+
+        lbltitle = new JLabel("PERSONAL CATEGORY");
+        lbltitle.setFont(new Font("Arial", Font.BOLD, 15));
+        lbltitle.setBounds(10, 10, 200, 30);
+
+        btnPayment = new JButton("PAYMENT");
+        btnPayment.setBounds(660, 10, 100, 30);
+        btnPayment.addActionListener(this);
         
-        //header
-        categ = new JLabel("PERSONAL CATEGORY");
-        cart = new JButton("CART");
-        home = new JButton("HOME");
-       
-        //main categories
-        homecat = new JButton("HOME");
-        personalcat = new JButton("PERSONAL");
-        workcat = new JButton("WORK");
-  
-        //items
-        item1 = new JLabel("Item 1");
-        item2 = new JLabel("Item 2");
-        item3 = new JLabel("Item 3");
-        
-        //product names
-        name1 = new JLabel("PRODUCT NAME:  Bluetooth Headset");
-        name2 = new JLabel("PRODUCT NAME:  Waterproof Laptop Bag");
-        name3 = new JLabel("PRODUCT NAME:  Universal Keyboard");
-        
-        
-        //product descriptions
-        desc1 = new JLabel("DESCRIPTION: Audio device");
-        desc2 = new JLabel("DESCRIPTION: Daily use bag");
-        desc3 = new JLabel("DESCRIPTION: Computer peripheral");
-        
-        //prices
-        price1 = new JLabel("PRICE:  $1,291.00");
-        price2 = new JLabel("PRICE:  $124.26");
-        price3 = new JLabel("PRICE:  $100.82");
-        
-         //add to cart buttons
-        cart1 = new JButton("Select product");
-        cart2 = new JButton("Select product");
-        cart3 = new JButton("Select product");
-        
-        panel = new JPanel();
-        panel.setBounds(140, 60, 430, 320);
-        panel.setBackground(Color.WHITE);
-        
-        //header ooordinates       
-        categ.setBounds(25, 0, 200, 50);
-        cart.setBounds(490, 14, 80, 30);
-        home.setBounds(390, 14, 80, 30);
-                          
-        categ.setFont(new Font("Arial", Font.BOLD, 15 ));
-               
-        //main categories coordinates
-        homecat.setBounds(20, 100, 100, 30);
-        personalcat.setBounds(20, 200, 100, 30);
-        workcat.setBounds(20, 300, 100, 30);
-        
-        personalcat.setFont(new Font("Arial", Font.BOLD, 12));
-       
-        //items coordinates
-        item1.setBounds(160, 30, 100, 100);
-        item2.setBounds(160, 140, 100, 100);
-        item3.setBounds(160, 260, 100, 100);
-        
-        item1.setFont(new Font("Arial", Font.PLAIN, 14));
-        item2.setFont(new Font("Arial", Font.PLAIN, 14));
-        item3.setFont(new Font("Arial", Font.PLAIN, 14));
-        
-        //names coordinates
-        name1.setBounds(180, 30, 250, 150);
-        name2.setBounds(180, 140, 250, 150);
-        name3.setBounds(180, 260, 250, 150);
-      
-        //description coordinates
-        desc1.setBounds(180, 70, 200, 100);
-        desc2.setBounds(180, 180, 250, 100);
-        desc3.setBounds(180, 300, 200, 100);
-        
-        //prices coordinates
-        price1.setBounds(180, 60, 150, 150);
-        price2.setBounds(180, 170, 150, 150);
-        price3.setBounds(180, 290, 150, 150);
-        
-         //add to cart coordinates
-        cart1.setBounds(430, 100, 120, 30);
-        cart2.setBounds(430, 210, 120, 30);
-        cart3.setBounds(430, 330, 120, 30);
-               
-         //Action Listener
-        homecat.addActionListener(this);
-        personalcat.addActionListener(this);
-        workcat.addActionListener(this);      
-        home.addActionListener(this);
-        cart.addActionListener(this);
-        
-        Personal.add(categ);
-        Personal.add(home);
-        Personal.add(homecat);
-        Personal.add(personalcat);
-        Personal.add(workcat);
-        Personal.add(name1);
-        Personal.add(name2);
-        Personal.add(name3);
-        Personal.add(price1);
-        Personal.add(price2);
-        Personal.add(price3);
-        Personal.add(cart1);
-        Personal.add(cart2);
-        Personal.add(cart3);
-        Personal.add(cart);
-        Personal.add(item1);
-        Personal.add(item2);
-        Personal.add(item3);
-        Personal.add(desc1);
-        Personal.add(desc2);
-        Personal.add(desc3);
-        Personal.add(panel);
-        
-        
-        Personal.setLayout(null);            
-        Personal.setVisible(true);
-        Personal.setResizable(false);
-        Personal.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-}
+        btnHome = new JButton("HOME");
+        btnPersonal = new JButton("PERSONAL");
+        btnWork = new JButton("WORK");
+
+        Dimension buttonSize = new Dimension(100, 30);
+        btnHome.setBounds(10, 65, 100, 30);
+        btnPersonal.setBounds(10, 230, 100, 30);
+        btnWork.setBounds(10, 395, 100, 30);
+
+        btnHome.addActionListener(this);
+        btnPersonal.addActionListener(this);
+        btnWork.addActionListener(this);
+
+        add(btnHome);
+        add(btnPersonal);
+        add(btnWork);
+        add(lbltitle);
+        add(btnPayment);
+
+
+        pnlItems = new ArrayList<>();
+        lstItems = new ArrayList<>();
+        totalPrice = 0.0;
+
+        establishConnection();
+
+        JPanel itemsPanel = new JPanel();
+        itemsPanel.setLayout(new GridLayout(0, 1));
+        itemsPanel.setBounds(120, 60, 660, 500);
+
+        addItem(itemsPanel, "Bluetooth Headset", 45.00);
+        addItem(itemsPanel, "Shampoo", 12.50);
+        addItem(itemsPanel, "Conditioner", 15.75);
+
+        add(itemsPanel);
+
+        setVisible(true);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
+    private void establishConnection() {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            conn = DriverManager.getConnection(URL, USER, PASSWORD);
+            System.out.println("Database connection successful");
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+            System.out.println("Database connection failed");
+        }
+    }
+
+    private void addItem(JPanel panel, String itemName, double itemPrice) {
+        ItemPanel itemPanel = new ItemPanel(itemName, itemPrice);
+        pnlItems.add(itemPanel);
+        panel.add(itemPanel);
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         dispose();
-            
-            if(e.getSource() == homecat){
-                HomeCateg hc = new HomeCateg();
-                hc.setVisible(true);
-            }
-            else if(e.getSource() == personalcat){
-                PersonalCateg pc = new PersonalCateg();
-                pc.setVisible(true);
-            }
-            else if(e.getSource() == workcat){
-                WorkCateg wc = new WorkCateg();
-                wc.setVisible(true);
-            } 
-           
-             else if(e.getSource() == home){
-               shopping menu = new shopping();
-                menu.setVisible(true);
+
+        if (e.getSource() == btnHome) {
+            HomeCateg hc = new HomeCateg();
+            hc.setVisible(true);
+        } else if (e.getSource() == btnPersonal) {
+            PersonalCateg pc = new PersonalCateg();
+            pc.setVisible(true);
+        } else if (e.getSource() == btnWork) {
+            WorkCateg wc = new WorkCateg();
+            wc.setVisible(true);
+        } else if (e.getSource() == btnPayment) {
+            new OSPPayment(getCartItems(), totalPrice);
+            dispose();
+        }
     }
-             else if(e.getSource() == cart){
-               OSPCart cart = new OSPCart();
-               cart.setVisible(true);
 
-             }
+    private String getCartItems() {
+        StringBuilder items = new StringBuilder();
+        for (Item item : lstItems) {
+            items.append(item.getName()).append(",").append(item.getPrice()).append("\n");
+        }
+        return items.toString();
+    }
 
-    }  
-    public static void main(String[]args){
-        
-        new PersonalCateg(){};
+    private void updateCart() {
+        // Update cart logic
+    }
+
+    private class ItemPanel extends JPanel implements ActionListener {
+
+        private JLabel lblItemName;
+        private JLabel lblItemPrice;
+        private JButton btnAddToCart;
+
+        public ItemPanel(String itemName, double itemPrice) {
+            setLayout(new FlowLayout(FlowLayout.LEFT));
+
+            lblItemName = new JLabel(itemName);
+            lblItemPrice = new JLabel("$" + itemPrice);
+            btnAddToCart = new JButton("Add to Cart");
+
+            btnAddToCart.addActionListener(this);
+
+            add(lblItemName);
+            add(lblItemPrice);
+            add(btnAddToCart);
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if (e.getSource() == btnAddToCart) {
+                addItemToCart(lblItemName.getText(), Double.parseDouble(lblItemPrice.getText().substring(1)));
+            }
+        }
+
+        private void addItemToCart(String itemName, double itemPrice) {
+            lstItems.add(new Item(itemName, itemPrice));
+            totalPrice += itemPrice;
+            updateCart();
+
+            try (PreparedStatement insertItemStmt = conn.prepareStatement("INSERT INTO items (name, price) VALUES (?, ?)", Statement.RETURN_GENERATED_KEYS)) {
+                insertItemStmt.setString(1, itemName);
+                insertItemStmt.setDouble(2, itemPrice);
+                insertItemStmt.executeUpdate();
+
+                try (ResultSet generatedKeys = insertItemStmt.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        int itemId = generatedKeys.getInt(1);
+                        try (PreparedStatement insertPaymentStmt = conn.prepareStatement("INSERT INTO payments (item_id, customer_name, customer_address, customer_phone, payment_status) VALUES (?, ?, ?, ?, ?)")) {
+                            insertPaymentStmt.setInt(1, itemId);
+                            insertPaymentStmt.setString(2, "Customer Name");
+                            insertPaymentStmt.setString(3, "Customer Address");
+                            insertPaymentStmt.setString(4, "Customer Phone");
+                            insertPaymentStmt.setString(5, "Pending");
+                            insertPaymentStmt.executeUpdate();
+                        }
+                    }
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        new PersonalCateg();
+    }
+
+    private class Item {
+        private String name;
+        private double price;
+
+        public Item(String name, double price) {
+            this.name = name;
+            this.price = price;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public double getPrice() {
+            return price;
+        }
     }
 }
