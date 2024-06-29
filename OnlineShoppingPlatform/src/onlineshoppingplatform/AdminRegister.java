@@ -1,9 +1,10 @@
-package onlineshopp;
+package onlineshoppingplatform;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.*;
 
 public class AdminRegister extends JFrame implements ActionListener {
 
@@ -11,10 +12,10 @@ public class AdminRegister extends JFrame implements ActionListener {
     private JTextField txtfldUsername;
     private JPasswordField txtfldPassword;
     private JButton btnRegister, btnBack;
-    private DBManager db;
+    private Connection conn;
 
     public AdminRegister() {
-        db = new DBManager();
+        initializeDBConnection();
 
         setTitle("Admin Registration");
         setSize(400, 300);
@@ -63,16 +64,40 @@ public class AdminRegister extends JFrame implements ActionListener {
         setResizable(false);
     }
 
+    private void initializeDBConnection() {
+        try {
+            String URL = "jdbc:mysql://localhost:3306/osp";
+            String USER = "lance";
+            String PASSWORD = "12345";
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            conn = DriverManager.getConnection(URL, USER, PASSWORD);
+            System.out.println("Database connection successful");
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+            System.out.println("Database connection failed");
+        }
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == btnRegister) {
-            db.registerAdmin(txtfldUsername.getText(), new String(txtfldPassword.getPassword()));
+            registerAdmin(txtfldUsername.getText(), new String(txtfldPassword.getPassword()));
             JOptionPane.showMessageDialog(this, "Admin registered successfully!");
             dispose();
             new Dashboard().setVisible(true);
         } else if (e.getSource() == btnBack) {
             this.dispose();
             new Menu().setVisible(true);
+        }
+    }
+
+    private void registerAdmin(String username, String password) {
+        try (PreparedStatement stmt = conn.prepareStatement("INSERT INTO admins (username, password) VALUES (?, ?)")) {
+            stmt.setString(1, username);
+            stmt.setString(2, password);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
