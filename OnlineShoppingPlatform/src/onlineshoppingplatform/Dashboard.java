@@ -1,4 +1,4 @@
-package onlineshopp;
+package onlineshoppingplatform;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -85,7 +85,7 @@ public class Dashboard extends JFrame implements ActionListener {
         }
     }
 
-    private void UpdateItem() {
+    private void updateItem() {
         String itemName = JOptionPane.showInputDialog(this, "Enter Item Name:");
         String itemPriceStr = JOptionPane.showInputDialog(this, "Enter Item Price:");
         double itemPrice = Double.parseDouble(itemPriceStr);
@@ -151,7 +151,7 @@ public class Dashboard extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == btnAdd) {
-            UpdateItem();
+            updateItem();
         } else if (e.getSource() == btnDelete) {
             deleteItem();
         }
