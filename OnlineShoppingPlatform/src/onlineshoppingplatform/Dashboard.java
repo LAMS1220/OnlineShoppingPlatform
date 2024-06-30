@@ -10,7 +10,7 @@ import java.sql.*;
 public class Dashboard extends JFrame implements ActionListener {
     private JTable itemTable;
     private DefaultTableModel tableModel;
-    private JButton btnAdd, btnDelete;
+    private JButton btnDelete, btnLogout;
     private Connection connection;
     private static final String URL = "jdbc:mysql://localhost:3306/osp";
     private static final String USER = "lance";
@@ -22,25 +22,29 @@ public class Dashboard extends JFrame implements ActionListener {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
-        btnAdd = new JButton("UPDATE");
         btnDelete = new JButton("DELETE");
+        btnLogout = new JButton("LOG OUT");
 
         String[] columnNames = {"Item Name", "Item Price", "Customer Name", "Customer Address", "Customer Phone", "Payment Status"};
-        tableModel = new DefaultTableModel(columnNames, 0);
+        tableModel = new DefaultTableModel(columnNames, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return true;
+            }
+        };
         itemTable = new JTable(tableModel);
         JScrollPane scrollPane = new JScrollPane(itemTable);
         add(scrollPane, BorderLayout.CENTER);
 
-        // Initialize database connection
         initializeDBConnection();
         fetchItems();
 
-        btnAdd.addActionListener(this);
         btnDelete.addActionListener(this);
+        btnLogout.addActionListener(this);
 
         JPanel buttonPanel = new JPanel();
-        buttonPanel.add(btnAdd);
         buttonPanel.add(btnDelete);
+        buttonPanel.add(btnLogout);
         add(buttonPanel, BorderLayout.SOUTH);
 
         setVisible(true);
@@ -85,44 +89,6 @@ public class Dashboard extends JFrame implements ActionListener {
         }
     }
 
-    private void updateItem() {
-        String itemName = JOptionPane.showInputDialog(this, "Enter Item Name:");
-        String itemPriceStr = JOptionPane.showInputDialog(this, "Enter Item Price:");
-        double itemPrice = Double.parseDouble(itemPriceStr);
-
-        try {
-            String insertItemQuery = "INSERT INTO items (name, price) VALUES (?, ?)";
-            PreparedStatement preparedStatement = connection.prepareStatement(insertItemQuery, Statement.RETURN_GENERATED_KEYS);
-            preparedStatement.setString(1, itemName);
-            preparedStatement.setDouble(2, itemPrice);
-            preparedStatement.executeUpdate();
-
-            ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
-            if (generatedKeys.next()) {
-                int itemId = generatedKeys.getInt(1);
-
-                String customerName = JOptionPane.showInputDialog(this, "Enter Customer Name:");
-                String customerAddress = JOptionPane.showInputDialog(this, "Enter Customer Address:");
-                String customerPhone = JOptionPane.showInputDialog(this, "Enter Customer Phone:");
-                String paymentStatus = JOptionPane.showInputDialog(this, "Enter Payment Status:");
-
-                String insertPaymentQuery = "INSERT INTO payments (item_id, customer_name, customer_address, customer_phone, payment_status) VALUES (?, ?, ?, ?, ?)";
-                preparedStatement = connection.prepareStatement(insertPaymentQuery);
-                preparedStatement.setInt(1, itemId);
-                preparedStatement.setString(2, customerName);
-                preparedStatement.setString(3, customerAddress);
-                preparedStatement.setString(4, customerPhone);
-                preparedStatement.setString(5, paymentStatus);
-                preparedStatement.executeUpdate();
-            }
-
-            preparedStatement.close();
-            refreshDashboard();
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, "Error adding item to database: " + e.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-
     private void deleteItem() {
         int selectedRow = itemTable.getSelectedRow();
         if (selectedRow == -1) {
@@ -138,10 +104,17 @@ public class Dashboard extends JFrame implements ActionListener {
             preparedStatement.executeUpdate();
             preparedStatement.close();
 
+            tableModel.removeRow(selectedRow);
+
             refreshDashboard();
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(this, "Error deleting item from database: " + e.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    private void logout() {
+        dispose();
+        SwingUtilities.invokeLater(Menu::new);
     }
 
     public void refreshDashboard() {
@@ -150,10 +123,12 @@ public class Dashboard extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == btnAdd) {
-            updateItem();
-        } else if (e.getSource() == btnDelete) {
+        if (e.getSource() == btnDelete) {
             deleteItem();
+        } else if (e.getSource() == btnLogout) {
+            Menu menu = new Menu();
+            menu.setVisible(true);
+            dispose();
         }
     }
 
